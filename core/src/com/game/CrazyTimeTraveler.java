@@ -3,13 +3,17 @@ package com.game;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import screens.SplashScreen;
 import utils.Assets;
 
 public class CrazyTimeTraveler extends Game {
@@ -17,9 +21,9 @@ public class CrazyTimeTraveler extends Game {
 	public static int GAME_WIDTH = 300;
 	public static int GAME_HEIGHT = 200;
 
-	public FreeTypeFontGenerator generator;
-	public FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-	public BitmapFont font;
+	//public FreeTypeFontGenerator generator;
+	//public FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+	//public BitmapFont font;
 
 	public OrthographicCamera camera;
 	public Viewport viewport;
@@ -37,12 +41,13 @@ public class CrazyTimeTraveler extends Game {
 		assets = new Assets();
 
 		//create our font
-		generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Gravity2.ttf"));
-		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 22;
-		parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:%-";
-		font = generator.generateFont(parameter);
-		font.setColor(Color.WHITE);
+		//generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Gravity2.ttf"));
+
+		//parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		//parameter.size = 22;
+		//parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:%-";
+		//font = generator.generateFont(parameter);
+		//font.setColor(Color.WHITE);
 
 		//create our batch for drawing to the screen
 		batch = new SpriteBatch();
@@ -52,6 +57,7 @@ public class CrazyTimeTraveler extends Game {
 		camera.setToOrtho(false, GAME_WIDTH, GAME_HEIGHT);
 		viewport = new ExtendViewport(GAME_WIDTH, GAME_HEIGHT, camera);
 
+		this.setScreen(new SplashScreen(this));
 	}
 
 	@Override
@@ -65,8 +71,8 @@ public class CrazyTimeTraveler extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		generator.dispose();
-		font.dispose();
+		//generator.dispose();
+		//font.dispose();
 		assets.dispose();
 	}
 }

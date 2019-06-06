@@ -33,7 +33,7 @@ public class ParallaxIndustrial {
 
         atlas = game.assets.getTextureAtlas();
         background = atlas.findRegion(Assets.INDUSTRIAL_BACKGROUND);
-        farTowers = atlas.findRegion(Assets.INDUSTRIAL_FAR_BACKTOWERS);
+        farTowers = atlas.findRegion(Assets.INDUSTRIAL_FAR_BACK_TOWERS);
         unfinishedTowers = atlas.findRegion(Assets.INDUSTRIAL_UNFINISHED_TOWERS);
         buildings = atlas.findRegion(Assets.INDUSTRIAL_BUILDINGS);
 

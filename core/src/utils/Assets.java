@@ -2,13 +2,21 @@ package utils;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Assets implements Disposable {
 
+    FileHandleResolver resolver = new InternalFileHandleResolver();
     public static final AssetDescriptor<TextureAtlas> textureAtlas = new AssetDescriptor<TextureAtlas>("images/images.atlas", TextureAtlas.class);
 
     //sprites
@@ -19,17 +27,42 @@ public class Assets implements Disposable {
 
     //environment
     public static final String INDUSTRIAL_BACKGROUND = "green-background";
-    public static final String INDUSTRIAL_FAR_BACKTOWERS = "far-back-towers";
+    public static final String INDUSTRIAL_FAR_BACK_TOWERS = "far-back-towers";
     public static final String INDUSTRIAL_UNFINISHED_TOWERS = "unfinished-towers";
     public static final String INDUSTRIAL_BUILDINGS = "buildings";
 
+    //fonts
+    public static final String SILVER_FONT = "font/Silver.ttf";
+    public static final String GRAVITY_FONT = "font/Gravity2.ttf";
+
+    private FreetypeFontLoader.FreeTypeFontLoaderParameter smallFont;
+    private FreetypeFontLoader.FreeTypeFontLoaderParameter bigFont;
+
+    public BitmapFont silverFont;
+    public BitmapFont gravityFont;
+
     private AssetManager assetManager;
 
-    public Assets(){
+    public Assets() {
         assetManager = new AssetManager();
+
+        assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+        assetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+
+        smallFont = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        bigFont = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        smallFont.fontFileName = "font/Silver.ttf";
+        bigFont.fontFileName = "font/Gravity2.ttf";
+        smallFont.fontParameters.size = 16;
+        bigFont.fontParameters.size = 22;
+        assetManager.load("font/Silver.ttf", BitmapFont.class, smallFont);
+        assetManager.finishLoading();
+
+        silverFont = assetManager.get("font/Silver.ttf", BitmapFont.class);
     }
 
     public void loadAssets(){
+        assetManager.load(GRAVITY_FONT, BitmapFont.class, bigFont);
         assetManager.load(textureAtlas);
         assetManager.finishLoading();
     }
@@ -46,9 +79,12 @@ public class Assets implements Disposable {
         return assetManager.update();
     }
 
+    public AssetManager getAssetManager(){
+        return assetManager;
+    }
+
     @Override
     public void dispose() {
         assetManager.dispose();
     }
-
 }
