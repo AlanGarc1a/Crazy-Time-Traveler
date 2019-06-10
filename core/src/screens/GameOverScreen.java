@@ -1,7 +1,6 @@
 package screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -11,58 +10,54 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.game.CrazyTimeTraveler;
 
-public class MenuScreen extends AbstractScreen {
+public class GameOverScreen extends AbstractScreen {
 
-    private Stage menuStage;
-    private Table menuTable;
+    private Stage gameOverStage;
+    private Table gameOverTable;
+    private Label gameOverLabel;
+    private TextButton playAgainButton;
+    private TextButton mainMenuButton;
 
-    private Label title;
-    private TextButton play;
-    private TextButton about;
-    private TextButton settings;
-
-    public MenuScreen(CrazyTimeTraveler game) {
+    public GameOverScreen(CrazyTimeTraveler game) {
         super(game);
-
     }
 
     @Override
     public void show() {
-        menuStage = new Stage(game.viewport);
-        menuTable = new Table();
+        gameOverStage = new Stage(game.viewport);
+        gameOverTable = new Table();
 
-        title = new Label("CRAZY TIME TRAVELER", style);
-        play = new TextButton("PLAY", buttonStyle);
-        about = new TextButton("ABOUT", buttonStyle);
-        settings = new TextButton("SETTINGS", buttonStyle);
+        gameOverLabel = new Label("GAME OVER", style);
+        playAgainButton = new TextButton("PLAY AGAIN", buttonStyle);
+        mainMenuButton = new TextButton("MAIN MENU", buttonStyle);
 
         root.setFillParent(true);
-        root.add(title).padBottom(30f);
+        root.add(gameOverLabel).padBottom(20f);
         root.row();
-        menuTable.add(settings).padRight(15f);
-        menuTable.add(play).pad(30f);
-        menuTable.add(about).padLeft(15f);
-        root.add(menuTable);
+        gameOverTable.add(mainMenuButton).padRight(10f);
+        gameOverTable.add(playAgainButton).padLeft(15f);
+        root.add(gameOverTable);
 
-        menuStage.addActor(root);
+        gameOverStage.addActor(root);
 
-        Gdx.input.setInputProcessor(menuStage);
+        Gdx.input.setInputProcessor(gameOverStage);
     }
 
     @Override
     public void render(float delta) {
+        game.camera.update();
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         updateScreen();
 
-        menuStage.act();
-        menuStage.draw();
+        gameOverStage.act();
+        gameOverStage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        menuStage.getViewport().update(width, height, true);
+        gameOverStage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -72,16 +67,15 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        menuStage.dispose();
+        gameOverStage.dispose();
     }
 
     private void updateScreen(){
-
-        about.addListener(new InputListener(){
+        playAgainButton.addListener(new InputListener(){
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(new AboutScreen(game));
+                game.setScreen(new GameScreen(game));
                 return true;
             }
 
@@ -91,11 +85,11 @@ public class MenuScreen extends AbstractScreen {
             }
         });
 
-        play.addListener(new InputListener(){
+        mainMenuButton.addListener(new InputListener(){
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new MenuScreen(game));
                 return true;
             }
 

@@ -23,7 +23,7 @@ public abstract class GameObject {
         atlas = game.assets.getTextureAtlas();
     }
 
-    public abstract void update(float delta);
+    public abstract void update();
     public abstract void draw(SpriteBatch batch);
 
     public Rectangle getBounds(){
@@ -35,4 +35,6 @@ public abstract class GameObject {
 
         direction.scl(Gdx.graphics.getDeltaTime());
     }
+
+    public float getPosition(){ return position.x; }
 }

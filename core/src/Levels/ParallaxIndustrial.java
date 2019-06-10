@@ -1,6 +1,5 @@
 package Levels;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,75 +10,36 @@ public class ParallaxIndustrial {
 
     CrazyTimeTraveler game;
 
-    public static final int DEFAULT_SPEED = 80;
-    public static final int ACCELERATION = 50;
-    public static final int GOAL_REACH_ACCELERATION = 200;
-
     private TextureAtlas atlas;
 
-    private TextureRegion background;
-    private TextureRegion farTowers;
-    private TextureRegion unfinishedTowers;
-    private TextureRegion buildings;
+    private TextureRegion backgroundImage;
+    private TextureRegion farTowersImage;
+    private TextureRegion unfinishedTowersImage;
+    private TextureRegion buildingsImage;
 
-    private float x1, x2;
-    private int speed;
-    private int goalSpeed;
-    private float imageScale;
-    private boolean speedFixed;
 
     public ParallaxIndustrial(CrazyTimeTraveler game){
         this.game = game;
 
         atlas = game.assets.getTextureAtlas();
-        background = atlas.findRegion(Assets.INDUSTRIAL_BACKGROUND);
-        farTowers = atlas.findRegion(Assets.INDUSTRIAL_FAR_BACK_TOWERS);
-        unfinishedTowers = atlas.findRegion(Assets.INDUSTRIAL_UNFINISHED_TOWERS);
-        buildings = atlas.findRegion(Assets.INDUSTRIAL_BUILDINGS);
 
-        x1 = 0;
-        x2 = background.getRegionWidth();
-        speed = 0;
-        goalSpeed = DEFAULT_SPEED;
-        imageScale = CrazyTimeTraveler.GAME_WIDTH;
-        speedFixed = true;
+        backgroundImage = atlas.findRegion(Assets.INDUSTRIAL_BACKGROUND);
+        farTowersImage = atlas.findRegion(Assets.INDUSTRIAL_FAR_BACK_TOWERS);
+        unfinishedTowersImage = atlas.findRegion(Assets.INDUSTRIAL_UNFINISHED_TOWERS);
+        buildingsImage = atlas.findRegion(Assets.INDUSTRIAL_BUILDINGS);
     }
 
-    public void updateAnddraw(SpriteBatch batch ,float deltaTime){
-        //Speed adjustment to reach goal
-        if (speed < goalSpeed) {
-            speed += GOAL_REACH_ACCELERATION * deltaTime;
-            if (speed > goalSpeed)
-                speed = goalSpeed;
-        } else if (speed > goalSpeed) {
-            speed -= GOAL_REACH_ACCELERATION * deltaTime;
-            if (speed < goalSpeed)
-                speed = goalSpeed;
-        }
+    public void draw(SpriteBatch batch){
+        batch.draw(backgroundImage, game.viewport.getScreenX(), game.viewport.getScreenY(),
+                game.viewport.getScreenWidth() / 2, game.viewport.getScreenHeight() / 2);
 
-        if (!speedFixed)
-            speed += ACCELERATION * deltaTime;
+        batch.draw(farTowersImage, game.viewport.getScreenX(), game.viewport.getScreenY(),
+                game.viewport.getScreenWidth() / 2, game.viewport.getScreenHeight() / 2);
 
-        x1 -= speed * deltaTime;
-        x2 -= speed * deltaTime;
+        batch.draw(unfinishedTowersImage, game.viewport.getScreenX(), game.viewport.getScreenY(),
+                game.viewport.getScreenWidth() / 2, game.viewport.getScreenHeight() / 2);
 
-        //if image reached the left edge of the screen and is not visible, put it back
-        if (x1 + background.getRegionWidth() * imageScale <= 0)
-            x1 = x2 + background.getRegionWidth() * imageScale;
-
-        if (x2 + background.getRegionWidth() * imageScale <= 0)
-            x2 = x1 + background.getRegionWidth() * imageScale;
-
-        //Render
-        batch.draw(background, x1, 0, background.getRegionWidth() * imageScale, CrazyTimeTraveler.GAME_HEIGHT );
-        batch.draw(background, x2, 0, background.getRegionWidth() * imageScale, CrazyTimeTraveler.GAME_HEIGHT );
-    }
-
-    public void setSpeed (int goalSpeed) {
-        this.goalSpeed = goalSpeed;
-    }
-
-    public void setSpeedFixed (boolean speedFixed) {
-        this.speedFixed = speedFixed;
+        batch.draw(buildingsImage, game.viewport.getScreenX(), game.viewport.getScreenY(),
+                game.viewport.getScreenWidth() / 2, game.viewport.getScreenHeight() / 2);
     }
 }

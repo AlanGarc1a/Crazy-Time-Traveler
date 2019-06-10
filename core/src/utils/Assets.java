@@ -53,9 +53,9 @@ public class Assets implements Disposable {
         bigFont = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         smallFont.fontFileName = "font/Silver.ttf";
         bigFont.fontFileName = "font/Gravity2.ttf";
-        smallFont.fontParameters.size = 16;
+        smallFont.fontParameters.size = 40;
         bigFont.fontParameters.size = 22;
-        assetManager.load("font/Silver.ttf", BitmapFont.class, smallFont);
+        assetManager.load(SILVER_FONT, BitmapFont.class, smallFont);
         assetManager.finishLoading();
 
         silverFont = assetManager.get("font/Silver.ttf", BitmapFont.class);

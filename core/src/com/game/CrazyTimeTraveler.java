@@ -11,19 +11,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.*;
 import screens.SplashScreen;
 import utils.Assets;
 
 public class CrazyTimeTraveler extends Game {
 
-	public static int GAME_WIDTH = 300;
-	public static int GAME_HEIGHT = 200;
-
-	//public FreeTypeFontGenerator generator;
-	//public FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-	//public BitmapFont font;
+	public static int GAME_WIDTH = 600;
+	public static int GAME_HEIGHT = 480;
 
 	public OrthographicCamera camera;
 	public Viewport viewport;
@@ -40,24 +35,23 @@ public class CrazyTimeTraveler extends Game {
 
 		assets = new Assets();
 
-		//create our font
-		//generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Gravity2.ttf"));
-
-		//parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		//parameter.size = 22;
-		//parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:%-";
-		//font = generator.generateFont(parameter);
-		//font.setColor(Color.WHITE);
-
 		//create our batch for drawing to the screen
 		batch = new SpriteBatch();
 
 		//setup our camera and viewport
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, GAME_WIDTH, GAME_HEIGHT);
-		viewport = new ExtendViewport(GAME_WIDTH, GAME_HEIGHT, camera);
+		viewport = new StretchViewport(GAME_WIDTH, GAME_HEIGHT, camera);
+		viewport.apply();
+
+		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
 		this.setScreen(new SplashScreen(this));
+	}
+
+	@Override
+	public void resize(int width, int height){
+		viewport.update(width, height);
+		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 	}
 
 	@Override
@@ -71,8 +65,6 @@ public class CrazyTimeTraveler extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		//generator.dispose();
-		//font.dispose();
 		assets.dispose();
 	}
 }
