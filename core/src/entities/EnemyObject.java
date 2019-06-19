@@ -35,4 +35,12 @@ public abstract class EnemyObject implements Pool.Poolable {
     public Rectangle getRectangle(){
         return new Rectangle(position.x, position.y, WIDTH,HEIGHT);
     }
+
+    public int getWIDTH(){
+        return WIDTH;
+    }
+
+    public int getHEIGHT(){
+        return HEIGHT;
+    }
 }

@@ -33,7 +33,7 @@ public class PlaneEnemy extends EnemyObject {
 
         position = new Vector2(randomX, randomY);
 
-        WIDTH = 50;
+        WIDTH = 45;
         HEIGHT = 50;
     }
 
@@ -52,6 +52,6 @@ public class PlaneEnemy extends EnemyObject {
     @Override
     public void reset() {
         position.x = MathUtils.random(595, CrazyTimeTraveler.GAME_WIDTH);
-        position.y = MathUtils.random(0, CrazyTimeTraveler.GAME_HEIGHT - HEIGHT);
+        position.y = MathUtils.random(0, CrazyTimeTraveler.GAME_HEIGHT + HEIGHT);
     }
 }

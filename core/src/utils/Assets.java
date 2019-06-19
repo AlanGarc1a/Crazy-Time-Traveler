@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -35,6 +36,12 @@ public class Assets implements Disposable {
     public static final String SILVER_FONT = "font/Silver.ttf";
     public static final String GRAVITY_FONT = "font/Gravity2.ttf";
 
+    //sounds
+    public static final String PICKUP_SOUND = "sounds/pickup.wav";
+    public static final String EXPLOSION_SOUND = "sounds/explosion.wav";
+
+    public static final String PAUSE_BUTTON = "pause";
+
     private FreetypeFontLoader.FreeTypeFontLoaderParameter smallFont;
     private FreetypeFontLoader.FreeTypeFontLoaderParameter bigFont;
 
@@ -64,7 +71,13 @@ public class Assets implements Disposable {
     public void loadAssets(){
         assetManager.load(GRAVITY_FONT, BitmapFont.class, bigFont);
         assetManager.load(textureAtlas);
+        loadSounds();
         assetManager.finishLoading();
+    }
+
+    private void loadSounds(){
+        assetManager.load(PICKUP_SOUND, Sound.class);
+        assetManager.load(EXPLOSION_SOUND, Sound.class);
     }
 
     public TextureAtlas getTextureAtlas(){

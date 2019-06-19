@@ -1,7 +1,6 @@
 package screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -20,10 +19,11 @@ public class MenuScreen extends AbstractScreen {
     private TextButton play;
     private TextButton about;
     private TextButton settings;
+    private Label highScore;
 
     public MenuScreen(CrazyTimeTraveler game) {
         super(game);
-
+        int highscore = game.preferences.getInteger("highScore");
     }
 
     @Override
@@ -32,16 +32,19 @@ public class MenuScreen extends AbstractScreen {
         menuTable = new Table();
 
         title = new Label("CRAZY TIME TRAVELER", style);
+        highScore = new Label("HighScore: " + highScore, style);
         play = new TextButton("PLAY", buttonStyle);
         about = new TextButton("ABOUT", buttonStyle);
         settings = new TextButton("SETTINGS", buttonStyle);
 
         root.setFillParent(true);
-        root.add(title).padBottom(30f);
+        root.setDebug(true);
+        root.add(title).padBottom(40f);
         root.row();
-        menuTable.add(settings).padRight(15f);
-        menuTable.add(play).pad(30f);
-        menuTable.add(about).padLeft(15f);
+        menuTable.defaults().center().padLeft(20).padRight(20).uniformX();
+        menuTable.add(settings);
+        menuTable.add(play);
+        menuTable.add(about);
         root.add(menuTable);
 
         menuStage.addActor(root);
@@ -66,7 +69,7 @@ public class MenuScreen extends AbstractScreen {
     }
 
     @Override
-    public void hide() {
+    public void hide(){
         dispose();
     }
 
@@ -82,6 +85,20 @@ public class MenuScreen extends AbstractScreen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 game.setScreen(new AboutScreen(game));
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                super.touchUp(event, x, y, pointer, button);
+            }
+        });
+
+        settings.addListener(new InputListener(){
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                game.setScreen(new SettingsScreen(game));
                 return true;
             }
 

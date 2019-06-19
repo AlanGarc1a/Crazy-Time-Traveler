@@ -15,6 +15,9 @@ public abstract class GameObject {
     protected CrazyTimeTraveler game;
     protected TextureAtlas atlas;
 
+    protected int WIDTH;
+    protected int HEIGHT;
+
     public GameObject(CrazyTimeTraveler game, Vector2 position, Vector2 direction){
         this.game = game;
         this.position = position;
@@ -27,7 +30,7 @@ public abstract class GameObject {
     public abstract void draw(SpriteBatch batch);
 
     public Rectangle getBounds(){
-        return new Rectangle(position.x, position.y, 32,32);
+        return new Rectangle(position.x, position.y, WIDTH,HEIGHT);
     }
 
     public void setDirection(float x, float y){
@@ -37,4 +40,12 @@ public abstract class GameObject {
     }
 
     public float getPosition(){ return position.x; }
+
+    public int getWidth(){
+        return WIDTH;
+    }
+
+    public int getHEIGHT(){
+        return HEIGHT;
+    }
 }

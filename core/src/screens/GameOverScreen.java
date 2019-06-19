@@ -17,9 +17,18 @@ public class GameOverScreen extends AbstractScreen {
     private Label gameOverLabel;
     private TextButton playAgainButton;
     private TextButton mainMenuButton;
+    private Label scoreLabel, newHighScore;
+    private int score, highScore;
 
-    public GameOverScreen(CrazyTimeTraveler game) {
+    public GameOverScreen(CrazyTimeTraveler game, int score) {
         super(game);
+        this.score = score;
+        highScore = game.preferences.getInteger("highScore");
+
+        if(score > highScore){
+            game.preferences.putInteger("highScore", score);
+            game.preferences.flush();
+        }
     }
 
     @Override
@@ -28,11 +37,18 @@ public class GameOverScreen extends AbstractScreen {
         gameOverTable = new Table();
 
         gameOverLabel = new Label("GAME OVER", style);
+        scoreLabel = new Label("Score: " + score, style);
+        newHighScore = new Label("High Score: " + highScore, style);
         playAgainButton = new TextButton("PLAY AGAIN", buttonStyle);
         mainMenuButton = new TextButton("MAIN MENU", buttonStyle);
 
         root.setFillParent(true);
+        root.setDebug(true);
         root.add(gameOverLabel).padBottom(20f);
+        root.row();
+        root.add(scoreLabel).padBottom(20f);
+        root.row();
+        root.add(newHighScore).padBottom(20f);
         root.row();
         gameOverTable.add(mainMenuButton).padRight(10f);
         gameOverTable.add(playAgainButton).padLeft(15f);

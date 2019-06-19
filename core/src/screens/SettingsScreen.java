@@ -10,61 +10,59 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.game.CrazyTimeTraveler;
 
-public class AboutScreen extends AbstractScreen {
+public class SettingsScreen extends AbstractScreen {
 
-    private Stage aboutStage;
-    private Table aboutTable;
+    private Stage settingsStage;
+    private Table settingsTable;
 
-    private Label about;
-    private Label developer;
-    private Label gameArtist;
-    private Label fiverrAccount;
-    private TextButton back;
+    private Label settingsLabel;
+    private TextButton soundsButton;
+    private TextButton musicButton;
+    private TextButton backButton;
 
-    public AboutScreen(CrazyTimeTraveler game) {
+    public SettingsScreen(CrazyTimeTraveler game) {
         super(game);
     }
 
     @Override
     public void show() {
-        aboutStage = new Stage(game.viewport);
-        aboutTable = new Table();
+        settingsStage = new Stage(game.viewport);
+        settingsTable = new Table();
 
-        about = new Label("ABOUT", style);
-        developer = new Label("Developer: Alan Garcia", style);
-        gameArtist = new Label("Game Artists: deulamco", style);
-        fiverrAccount = new Label("https://www.fiverr.com/deulamco", style);
-        back = new TextButton("BACK", buttonStyle);
+        settingsLabel = new Label("Settings", style);
+        soundsButton = new TextButton("Sound On", buttonStyle);
+        musicButton = new TextButton("Music On", buttonStyle);
+        backButton = new TextButton("BACK", buttonStyle);
 
         root.setFillParent(true);
-        root.add(about).padBottom(20f);
-        root.row();
-        root.add(developer).padBottom(10f);
-        root.row();
-        root.add(gameArtist).padBottom(10f);
-        root.row();
-        root.add(fiverrAccount).padBottom(10);
-        root.row();
-        root.add(back);
-        aboutStage.addActor(root);
 
-        Gdx.input.setInputProcessor(aboutStage);
+        root.add(settingsLabel).padBottom(30f);
+        root.row();
+        root.add(soundsButton).padBottom(25f);
+        root.row();
+        root.add(musicButton).padBottom(25f);
+        root.row();
+        root.add(backButton);
+
+        settingsStage.addActor(root);
+
+        Gdx.input.setInputProcessor(settingsStage);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         updateScreen();
 
-        aboutStage.act();
-        aboutStage.draw();
+        settingsStage.act();
+        settingsStage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        aboutStage.getViewport().update(width, height, true);
+        settingsStage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -74,12 +72,12 @@ public class AboutScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        aboutStage.dispose();
+        settingsStage.dispose();
     }
 
     private void updateScreen(){
 
-        back.addListener(new InputListener(){
+        backButton.addListener(new InputListener(){
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){

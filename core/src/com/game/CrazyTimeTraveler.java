@@ -3,6 +3,7 @@ package com.game;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -25,6 +26,7 @@ public class CrazyTimeTraveler extends Game {
 	public SpriteBatch batch;
 
 	public Assets assets;
+	public Preferences preferences;
 
 	/*
 	   this function gets called immediately when our app starts
@@ -32,6 +34,9 @@ public class CrazyTimeTraveler extends Game {
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+
+		preferences = Gdx.app.getPreferences("CrazyTImeTraveler");
+		preferences.putBoolean("sound", true);
 
 		assets = new Assets();
 

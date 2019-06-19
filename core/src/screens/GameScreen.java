@@ -4,6 +4,8 @@ import Levels.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.game.CrazyTimeTraveler;
+import utils.Assets;
+
+import java.awt.*;
 
 public class GameScreen extends AbstractScreen {
 
@@ -20,11 +25,17 @@ public class GameScreen extends AbstractScreen {
         RESUMED,
     }
 
+    private Vector3 touchpoint;
+
     private Stage pauseStage;
     private Table pauseTable;
     private Label pauseLabel;
     private TextButton resumeButton;
     private TextButton menuButton;
+
+    private Rectangle pauseBounds;
+    private TextureRegion pauseButton;
+    int width, height;
 
     GAMESTATE gameState;
 
@@ -33,8 +44,15 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(CrazyTimeTraveler game) {
         super(game);
 
+        touchpoint = new Vector3();
         gameState = GAMESTATE.RUNNING;
+
         world = new World(game);
+        pauseButton = game.assets.getTextureAtlas().findRegion(Assets.PAUSE_BUTTON);
+        width = pauseButton.getRegionWidth() * 2;
+        height = pauseButton.getRegionHeight() * 2;
+        pauseBounds = new Rectangle(560, 430, width, height);
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override
@@ -61,26 +79,40 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         game.camera.update();
-        Gdx.gl.glClearColor(1,0.3f,0.2f,0.9f);
+        Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.P)){
-            gameState = GAMESTATE.PAUSED;
-        }
         game.batch.setProjectionMatrix(game.camera.combined);
+
+        if(Gdx.input.justTouched()){
+            game.camera.unproject(touchpoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+            if(pauseBounds.contains(touchpoint.x, touchpoint.y)){
+                world.getpickUpSound().play();
+                gameState = GAMESTATE.PAUSED;
+            }
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) gameState = GAMESTATE.PAUSED;
+
+        game.batch.begin();
+
 
         switch (gameState){
             case RUNNING:
-                world.update(delta);
-                world.draw(game.batch, delta);
+                world.update();
+                world.draw(game.batch);
+                game.batch.draw(pauseButton, 560, 430, width, height);
                 break;
             case PAUSED:
                 updatePausedState();
-                world.draw(game.batch, delta);
+                world.draw(game.batch);
                 pauseStage.act();
                 pauseStage.draw();
                 break;
         }
+
+        game.batch.end();
     }
 
     @Override
@@ -96,17 +128,18 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void resume() {
-        gameState = GAMESTATE.RESUMED;
+        if(gameState == GAMESTATE.PAUSED)
+            gameState = GAMESTATE.RESUMED;
     }
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-
+        pauseStage.dispose();
     }
 
     private void updatePausedState(){
