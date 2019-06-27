@@ -1,9 +1,6 @@
 package Levels;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -12,15 +9,12 @@ import com.game.CrazyTimeTraveler;
 import entities.PlaneEnemy;
 import entities.Player;
 import screens.GameOverScreen;
-import utils.Assets;
 
 public class World {
 
     //array of planes
     private Array<PlaneEnemy> planes;
     private float timer = TimeUtils.nanoTime();
-
-    Sound pickupSound;
 
     //plane pool
     private final Pool<PlaneEnemy> planePool = new Pool<PlaneEnemy>(2) {
@@ -37,7 +31,6 @@ public class World {
     public World(final CrazyTimeTraveler game){
         this.game = game;
 
-        pickupSound = game.assets.getAssetManager().get(Assets.PICKUP_SOUND);
         planes = new Array<PlaneEnemy>();
         parallaxIndustrial = new ParallaxIndustrial(game);
         player = new Player(game, new Vector2(), new Vector2(0,0));
@@ -61,19 +54,22 @@ public class World {
     public void update(){
         createPlanes();
 
+        parallaxIndustrial.update();
         player.update();
 
         for(PlaneEnemy planeEnemy : planes) {
             planeEnemy.update();
             if(player.getBounds().overlaps(planeEnemy.getRectangle())){
-                player.setDeadState();
+                planeEnemy.die();
+                player.die();
                 planes.removeValue(planeEnemy, false);
                 planePool.free(planeEnemy);
-                game.setScreen(new GameOverScreen(game, player.getScore()));
+                if(player.state == Player.STATE.DEAD && player.getStateTimer() < 0)
+                    game.setScreen(new GameOverScreen(game, player.getScore()));
             }
-            if(planeEnemy.getPosition().x < 0) {
+            if(planeEnemy.getPosition().x + planeEnemy.getWIDTH() < 0) {
                 player.addToScore();
-                pickupSound.play();
+                //game.assets.pickUpSound.play(1f);
                 planes.removeValue(planeEnemy, false);
                 planePool.free(planeEnemy);
             }
@@ -83,17 +79,12 @@ public class World {
     public void draw(SpriteBatch batch){
 
         parallaxIndustrial.draw(batch);
-
-        game.assets.silverFont.draw(game.batch, "Score: " + player.getScore(), 20, 460);
+        game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
 
         player.draw(batch);
 
         for(PlaneEnemy plane : planes)
             plane.draw(game.batch);
 
-    }
-
-    public Sound getpickUpSound(){
-        return pickupSound;
     }
 }

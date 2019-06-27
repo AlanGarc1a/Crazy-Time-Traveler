@@ -2,12 +2,12 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.game.CrazyTimeTraveler;
 
 public class GameOverScreen extends AbstractScreen {
@@ -23,11 +23,16 @@ public class GameOverScreen extends AbstractScreen {
     public GameOverScreen(CrazyTimeTraveler game, int score) {
         super(game);
         this.score = score;
-        highScore = game.preferences.getInteger("highScore");
+        highScore = game.preferences.getPrefs().getInteger("highscore");
+        newHighScore = new Label(null, style);
 
         if(score > highScore){
-            game.preferences.putInteger("highScore", score);
-            game.preferences.flush();
+            highScore = score;
+            game.preferences.getPrefs().putInteger("highscore", highScore);
+            game.preferences.getPrefs().flush();
+            newHighScore.setText("New High Score: " + highScore);
+        } else {
+            newHighScore.setText("High Score: " + highScore);
         }
     }
 
@@ -38,12 +43,10 @@ public class GameOverScreen extends AbstractScreen {
 
         gameOverLabel = new Label("GAME OVER", style);
         scoreLabel = new Label("Score: " + score, style);
-        newHighScore = new Label("High Score: " + highScore, style);
-        playAgainButton = new TextButton("PLAY AGAIN", buttonStyle);
-        mainMenuButton = new TextButton("MAIN MENU", buttonStyle);
+        playAgainButton = new TextButton("RETRY", buttonStyle);
+        mainMenuButton = new TextButton("MENU", buttonStyle);
 
         root.setFillParent(true);
-        root.setDebug(true);
         root.add(gameOverLabel).padBottom(20f);
         root.row();
         root.add(scoreLabel).padBottom(20f);
@@ -87,31 +90,17 @@ public class GameOverScreen extends AbstractScreen {
     }
 
     private void updateScreen(){
-        playAgainButton.addListener(new InputListener(){
-
+        playAgainButton.addListener(new ChangeListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+            public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new GameScreen(game));
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                super.touchUp(event, x, y, pointer, button);
             }
         });
 
-        mainMenuButton.addListener(new InputListener(){
-
+        mainMenuButton.addListener(new ChangeListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+            public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new MenuScreen(game));
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                super.touchUp(event, x, y, pointer, button);
             }
         });
     }

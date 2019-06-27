@@ -34,17 +34,17 @@ public class ParallaxIndustrial {
         unfinishedTowersImage = atlas.findRegion(Assets.INDUSTRIAL_UNFINISHED_TOWERS);
         buildingsImage = atlas.findRegion(Assets.INDUSTRIAL_BUILDINGS);
 
-        backgroundWidth = backgroundImage.getRegionWidth() * 3;
-        backgroundHeight = backgroundImage.getRegionHeight() * 3;
+        backgroundWidth = backgroundImage.getRegionWidth() * 3 ;
+        backgroundHeight = backgroundImage.getRegionHeight() * 3 ;
 
         farTowersWidth = farTowersImage.getRegionWidth() * 3;
         farTowersHeight = farTowersImage.getRegionHeight()  * 3;
 
-        unfinishedTowersWidth = unfinishedTowersImage.getRegionWidth() * 3;
-        unfinishedTowersHeight = unfinishedTowersImage.getRegionHeight() * 3;
+        unfinishedTowersWidth = unfinishedTowersImage.getRegionWidth() * 3 ;
+        unfinishedTowersHeight = unfinishedTowersImage.getRegionHeight() * 3 ;
 
-        buildingsWidth = buildingsImage.getRegionWidth() * 3;
-        buildingsHeight = buildingsImage.getRegionHeight() * 3;
+        buildingsWidth = buildingsImage.getRegionWidth()  * 3;
+        buildingsHeight = buildingsImage.getRegionHeight()* 3 ;
 
         buildingsX = 0;
         buildingsY = 0;
@@ -56,19 +56,27 @@ public class ParallaxIndustrial {
         unfinishedTowersY = 0;
     }
 
-    public void draw(SpriteBatch batch){
-
-        buildingsX -= 1;
+    public void update(){
+        buildingsX -= 2;
+        unfinishedTowersX -= 1;
 
         if(buildingsX < -buildingsWidth){
             buildingsX = 0;
         }
+
+        if(unfinishedTowersX < -unfinishedTowersWidth){
+            unfinishedTowersX = 0;
+        }
+    }
+
+    public void draw(SpriteBatch batch){
 
         batch.draw(backgroundImage, 0 ,0, backgroundWidth, backgroundHeight);
 
         batch.draw(farTowersImage, farTowersX, farTowersY, farTowersWidth, farTowersHeight);
 
         batch.draw(unfinishedTowersImage, unfinishedTowersX, unfinishedTowersY, unfinishedTowersWidth, unfinishedTowersHeight);
+        batch.draw(unfinishedTowersImage, unfinishedTowersX + unfinishedTowersWidth, unfinishedTowersY, unfinishedTowersWidth, unfinishedTowersHeight);
 
         batch.draw(buildingsImage, buildingsX, buildingsY, buildingsWidth, buildingsHeight);
         batch.draw(buildingsImage, buildingsX + buildingsWidth, buildingsY, buildingsWidth, buildingsHeight);

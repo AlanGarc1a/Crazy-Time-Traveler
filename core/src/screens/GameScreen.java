@@ -5,21 +5,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.game.CrazyTimeTraveler;
 import utils.Assets;
-
-import java.awt.*;
 
 public class GameScreen extends AbstractScreen {
 
     public enum GAMESTATE {
+        READY,
         RUNNING,
         PAUSED,
         RESUMED,
@@ -45,13 +47,14 @@ public class GameScreen extends AbstractScreen {
         super(game);
 
         touchpoint = new Vector3();
-        gameState = GAMESTATE.RUNNING;
+        gameState = GAMESTATE.READY;
 
         world = new World(game);
         pauseButton = game.assets.getTextureAtlas().findRegion(Assets.PAUSE_BUTTON);
         width = pauseButton.getRegionWidth() * 2;
         height = pauseButton.getRegionHeight() * 2;
         pauseBounds = new Rectangle(560, 430, width, height);
+        Gdx.input.setCatchBackKey(true);
         Gdx.input.setCatchBackKey(true);
     }
 
@@ -62,13 +65,13 @@ public class GameScreen extends AbstractScreen {
 
         pauseLabel = new Label("PAUSED", style);
         resumeButton = new TextButton("RESUME", buttonStyle);
-        menuButton = new TextButton("MAIN MENU", buttonStyle);
+        menuButton = new TextButton("MENU", buttonStyle);
 
         root.setFillParent(true);
-        root.add(pauseLabel).padBottom(30f);
+        root.add(pauseLabel).padBottom(30);
         root.row();
-        pauseTable.add(menuButton).padRight(15f);
-        pauseTable.add(resumeButton);
+        pauseTable.add(menuButton).padRight(15);
+        pauseTable.add(resumeButton).padLeft(15);
         root.add(pauseTable);
 
         pauseStage.addActor(root);
@@ -88,7 +91,6 @@ public class GameScreen extends AbstractScreen {
             game.camera.unproject(touchpoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
             if(pauseBounds.contains(touchpoint.x, touchpoint.y)){
-                world.getpickUpSound().play();
                 gameState = GAMESTATE.PAUSED;
             }
         }
@@ -97,18 +99,24 @@ public class GameScreen extends AbstractScreen {
 
         game.batch.begin();
 
-
         switch (gameState){
+
+            case READY:
+                if(Gdx.input.justTouched())
+                    gameState = GAMESTATE.RUNNING;
+                world.draw(game.batch);
+                game.assets.silverFont.draw(game.batch, "Touch screen to begin", 165, 105);
+                break;
             case RUNNING:
                 world.update();
                 world.draw(game.batch);
                 game.batch.draw(pauseButton, 560, 430, width, height);
                 break;
             case PAUSED:
-                updatePausedState();
                 world.draw(game.batch);
                 pauseStage.act();
                 pauseStage.draw();
+                updatePausedState();
                 break;
         }
 
@@ -157,19 +165,11 @@ public class GameScreen extends AbstractScreen {
             }
         });
 
-        menuButton.addListener(new InputListener(){
-
+        menuButton.addListener(new ChangeListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+            public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new MenuScreen(game));
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                super.touchUp(event, x, y, pointer, button);
             }
         });
     }
-
 }

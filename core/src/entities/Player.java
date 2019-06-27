@@ -30,10 +30,8 @@ public class Player extends GameObject {
 
     private float STARTING_X;
     private float STARTING_Y;
-
-    private int deathTime = 8;
-
-    Sound explosionSound;
+    private boolean isDead;
+    private int stateTimer;
 
     //players score
     private int Score;
@@ -44,25 +42,17 @@ public class Player extends GameObject {
         state = STATE.ALIVE;
 
         WIDTH = 45;
-        HEIGHT = 50;
+        HEIGHT = 45;
         STARTING_X = 50;
-        STARTING_Y = 150;
+        STARTING_Y = 225;
 
         this.position = new Vector2(STARTING_X,STARTING_Y);
 
         flyingAnimation = new Animation(1/15f, atlas.findRegions(Assets.JET), Animation.PlayMode.LOOP);
         deathAnimation = new Animation<TextureRegion>(1/15f, atlas.findRegions(Assets.JET_DEATH), Animation.PlayMode.LOOP);
 
-        explosionSound = game.assets.getAssetManager().get(Assets.EXPLOSION_SOUND);
+        stateTimer = 6;
         Score = 0;
-    }
-
-    public int getDeathTime(){
-        return deathTime;
-    }
-
-    public void setDeadState(){
-        state = STATE.DEAD;
     }
 
     @Override
@@ -71,21 +61,29 @@ public class Player extends GameObject {
         position.add(direction);
 
         if(position.y <= 0) {
-            setDirection(0,0);
-            //position.y = 0;
-            explosionSound.play(0.1f);
-            state = STATE.DEAD;
-            deathTime -= 1;
-            if(deathTime < 0)
+            die();
+            position.y = 0;
+            setDirection(0,position.y);
+            stateTimer--;
+            if(stateTimer < 0)
                 game.setScreen(new GameOverScreen(game, Score));
         }
 
-        if(position.y >= game.camera.viewportHeight)
-            position.y = game.camera.viewportHeight - HEIGHT;
+        if(position.y >= 480) {
+            position.y = 480;
+        }
 
-        if(Gdx.input.isTouched()){
-            setDirection(0, SPEED);
+        if(Gdx.input.isTouched() && state == STATE.ALIVE){
+           setDirection(0, SPEED);
         } else {
+            if(state == STATE.DEAD) {
+                setDirection(0, position.y);
+                stateTimer--;
+                if(stateTimer < 0 && isDead()) {
+                    game.setScreen(new GameOverScreen(game, Score));
+                }
+            }
+
             setDirection(0, -GRAVITY);
         }
     }
@@ -93,6 +91,8 @@ public class Player extends GameObject {
     @Override
     public void draw(SpriteBatch batch) {
         elapsedTime += Gdx.graphics.getDeltaTime();
+
+        state = getState();
 
         switch(state){
             case ALIVE:
@@ -102,6 +102,31 @@ public class Player extends GameObject {
                 batch.draw(deathAnimation.getKeyFrame(elapsedTime, false), position.x, position.y);
                 break;
         }
+    }
+
+    public STATE getState(){
+
+        if(isDead)
+            return STATE.DEAD;
+        else
+            return STATE.ALIVE;
+    }
+
+    public void die(){
+
+        if(!isDead()){
+            state = STATE.DEAD;
+            game.assets.explosion.play(1f);
+            isDead = true;
+        }
+    }
+
+    public int getStateTimer(){
+        return stateTimer;
+    }
+
+    public boolean isDead(){
+        return isDead;
     }
 
     public int getScore(){

@@ -1,20 +1,12 @@
 package com.game;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.utils.viewport.*;
-import screens.SplashScreen;
+import screens.*;
 import utils.Assets;
+import utils.GamePreferences;
 
 public class CrazyTimeTraveler extends Game {
 
@@ -26,17 +18,15 @@ public class CrazyTimeTraveler extends Game {
 	public SpriteBatch batch;
 
 	public Assets assets;
-	public Preferences preferences;
+	public GamePreferences preferences;
 
 	/*
 	   this function gets called immediately when our app starts
 	*/
 	@Override
 	public void create () {
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
-		preferences = Gdx.app.getPreferences("CrazyTImeTraveler");
-		preferences.putBoolean("sound", true);
+		preferences = new GamePreferences(this);
 
 		assets = new Assets();
 
@@ -56,7 +46,7 @@ public class CrazyTimeTraveler extends Game {
 	@Override
 	public void resize(int width, int height){
 		viewport.update(width, height);
-		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+		//camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 	}
 
 	@Override

@@ -11,11 +11,19 @@ import utils.Assets;
 
 public class PlaneEnemy extends EnemyObject {
 
+    public enum ENEMY_STATE{
+        ALIVE,
+        DEAD
+    }
+
+    ENEMY_STATE enemy_state = ENEMY_STATE.ALIVE;
+
     private Animation<TextureRegion> flyingAnimation;
     private Animation<TextureRegion> deathAnimation;
 
     private float randomX;
     private float randomY;
+    private boolean isDead;
 
     public PlaneEnemy(CrazyTimeTraveler game) {
         super(game);
@@ -29,12 +37,16 @@ public class PlaneEnemy extends EnemyObject {
         }
 
         randomX = MathUtils.random(595, CrazyTimeTraveler.GAME_WIDTH );
-        randomY = MathUtils.random(0, game.camera.viewportHeight);
+        randomY = MathUtils.random(0, 460 - HEIGHT );
 
         position = new Vector2(randomX, randomY);
 
         WIDTH = 45;
-        HEIGHT = 50;
+        HEIGHT = 45;
+    }
+
+    public void setDeadState(){
+        enemy_state = ENEMY_STATE.DEAD;
     }
 
     @Override
@@ -46,12 +58,41 @@ public class PlaneEnemy extends EnemyObject {
     public void draw(SpriteBatch batch){
 
         elapsedTime += Gdx.graphics.getDeltaTime();
-        batch.draw(flyingAnimation.getKeyFrame(elapsedTime, true), position.x, position.y, WIDTH, HEIGHT);
+
+        enemy_state = getState();
+
+        switch (enemy_state){
+            case ALIVE:
+                batch.draw(flyingAnimation.getKeyFrame(elapsedTime), position.x, position.y, WIDTH, HEIGHT);
+                break;
+            case DEAD:
+                batch.draw(deathAnimation.getKeyFrame(elapsedTime, false), position.x, position.y, WIDTH, HEIGHT);
+
+        }
+    }
+
+    public ENEMY_STATE getState(){
+
+        if(isDead)
+            return ENEMY_STATE.DEAD;
+        else
+            return ENEMY_STATE.ALIVE;
+    }
+
+    public void die(){
+
+        if(!isDead()){
+            isDead = true;
+        }
     }
 
     @Override
     public void reset() {
         position.x = MathUtils.random(595, CrazyTimeTraveler.GAME_WIDTH);
-        position.y = MathUtils.random(0, CrazyTimeTraveler.GAME_HEIGHT + HEIGHT);
+        position.y = MathUtils.random(0, 455);
+    }
+
+    public boolean isDead(){
+        return isDead;
     }
 }

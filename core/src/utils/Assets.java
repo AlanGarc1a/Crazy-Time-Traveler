@@ -1,15 +1,14 @@
 package utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
@@ -32,6 +31,11 @@ public class Assets implements Disposable {
     public static final String INDUSTRIAL_UNFINISHED_TOWERS = "unfinished-towers";
     public static final String INDUSTRIAL_BUILDINGS = "buildings";
 
+    //second environment
+    public static final String WARP_BACKGROUND = "skyline-b";
+    public static final String WARP_BUILDINGS = "buildings-bg";
+    public static final String WARP_NEAR_BUILDINGS = "near-buildings-bg";
+
     //fonts
     public static final String SILVER_FONT = "font/Silver.ttf";
     public static final String GRAVITY_FONT = "font/Gravity2.ttf";
@@ -39,6 +43,12 @@ public class Assets implements Disposable {
     //sounds
     public static final String PICKUP_SOUND = "sounds/pickup.wav";
     public static final String EXPLOSION_SOUND = "sounds/explosion.wav";
+    public final Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal(PICKUP_SOUND));
+    public final Sound explosion = Gdx.audio.newSound(Gdx.files.internal(EXPLOSION_SOUND));
+
+    //music
+    public static final String MUSIC = "music/Prologue.mp3";
+    public final Music gameMusic = Gdx.audio.newMusic(Gdx.files.internal(MUSIC));
 
     public static final String PAUSE_BUTTON = "pause";
 
@@ -72,6 +82,7 @@ public class Assets implements Disposable {
         assetManager.load(GRAVITY_FONT, BitmapFont.class, bigFont);
         assetManager.load(textureAtlas);
         loadSounds();
+        loadMusic();
         assetManager.finishLoading();
     }
 
@@ -79,6 +90,11 @@ public class Assets implements Disposable {
         assetManager.load(PICKUP_SOUND, Sound.class);
         assetManager.load(EXPLOSION_SOUND, Sound.class);
     }
+
+    private void loadMusic(){
+        assetManager.load(MUSIC, Music.class);
+    }
+
 
     public TextureAtlas getTextureAtlas(){
         return assetManager.get(textureAtlas);

@@ -32,7 +32,7 @@ public class LoadingScreen extends AbstractScreen {
         loadingStage = new Stage(game.viewport);
         loadingTable = new Table();
 
-        loadingLabel = new Label("Loading", style);
+        loadingLabel = new Label("Loading...", style);
         percentageLabel = new Label(progress + "", style);
 
         loadingTable.setFillParent(true);
