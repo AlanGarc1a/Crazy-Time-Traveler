@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -70,8 +71,8 @@ public class GameScreen extends AbstractScreen {
         root.setFillParent(true);
         root.add(pauseLabel).padBottom(30);
         root.row();
-        pauseTable.add(menuButton).padRight(15);
-        pauseTable.add(resumeButton).padLeft(15);
+        pauseTable.add(menuButton).padRight(25);
+        pauseTable.add(resumeButton).padLeft(25);
         root.add(pauseTable);
 
         pauseStage.addActor(root);
@@ -107,13 +108,19 @@ public class GameScreen extends AbstractScreen {
                 world.draw(game.batch);
                 game.assets.silverFont.draw(game.batch, "Touch screen to begin", 165, 105);
                 break;
+
             case RUNNING:
-                world.update();
+                world.update(delta);
                 world.draw(game.batch);
                 game.batch.draw(pauseButton, 560, 430, width, height);
                 break;
+
             case PAUSED:
                 world.draw(game.batch);
+                game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                game.shapeRenderer.rect(305,175,88,45);
+                game.shapeRenderer.rect(192,175,88,45);
+                game.shapeRenderer.end();
                 pauseStage.act();
                 pauseStage.draw();
                 updatePausedState();

@@ -2,8 +2,10 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -31,6 +33,7 @@ public class GameOverScreen extends AbstractScreen {
             game.preferences.getPrefs().putInteger("highscore", highScore);
             game.preferences.getPrefs().flush();
             newHighScore.setText("New High Score: " + highScore);
+            newHighScore.addAction( Actions.forever( Actions.sequence( Actions.fadeOut(0.5f), Actions.fadeIn(0.6f) )));
         } else {
             newHighScore.setText("High Score: " + highScore);
         }
@@ -53,7 +56,7 @@ public class GameOverScreen extends AbstractScreen {
         root.row();
         root.add(newHighScore).padBottom(20f);
         root.row();
-        gameOverTable.add(mainMenuButton).padRight(10f);
+        gameOverTable.add(mainMenuButton).padRight(55f);
         gameOverTable.add(playAgainButton).padLeft(15f);
         root.add(gameOverTable);
 
@@ -69,6 +72,11 @@ public class GameOverScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         updateScreen();
+
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        game.shapeRenderer.rect(315,109,88,45);
+        game.shapeRenderer.rect(190,109,88,45);
+        game.shapeRenderer.end();
 
         gameOverStage.act();
         gameOverStage.draw();

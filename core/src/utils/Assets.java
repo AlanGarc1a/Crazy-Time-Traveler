@@ -32,9 +32,9 @@ public class Assets implements Disposable {
     public static final String INDUSTRIAL_BUILDINGS = "buildings";
 
     //second environment
-    public static final String WARP_BACKGROUND = "skyline-b";
-    public static final String WARP_BUILDINGS = "buildings-bg";
-    public static final String WARP_NEAR_BUILDINGS = "near-buildings-bg";
+    public static final String CYBER_BACK_BUILDINGS = "back-buildings";
+    public static final String CYBER_FAR_BUILDINGS = "far-buildings";
+    public static final String CYBER_FOREGROUND = "foreground";
 
     //fonts
     public static final String SILVER_FONT = "font/Silver.ttf";

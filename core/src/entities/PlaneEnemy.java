@@ -37,16 +37,12 @@ public class PlaneEnemy extends EnemyObject {
         }
 
         randomX = MathUtils.random(595, CrazyTimeTraveler.GAME_WIDTH );
-        randomY = MathUtils.random(0, 460 - HEIGHT );
+        randomY = MathUtils.random(0, 450 - HEIGHT );
 
         position = new Vector2(randomX, randomY);
 
         WIDTH = 45;
         HEIGHT = 45;
-    }
-
-    public void setDeadState(){
-        enemy_state = ENEMY_STATE.DEAD;
     }
 
     @Override
@@ -89,7 +85,7 @@ public class PlaneEnemy extends EnemyObject {
     @Override
     public void reset() {
         position.x = MathUtils.random(595, CrazyTimeTraveler.GAME_WIDTH);
-        position.y = MathUtils.random(0, 455);
+        position.y = MathUtils.random(0, 430);
     }
 
     public boolean isDead(){

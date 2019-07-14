@@ -39,11 +39,9 @@ public abstract class GameObject {
         direction.scl(Gdx.graphics.getDeltaTime());
     }
 
-    public float getPosition(){ return position.x; }
+    public Vector2 getPosition(){ return position; }
 
-    public int getWidth(){
-        return WIDTH;
-    }
+    public int getWIDTH(){ return WIDTH; }
 
     public int getHEIGHT(){
         return HEIGHT;

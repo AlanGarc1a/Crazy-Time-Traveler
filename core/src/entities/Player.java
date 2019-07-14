@@ -36,6 +36,7 @@ public class Player extends GameObject {
     //players score
     private int Score;
 
+
     public Player(CrazyTimeTraveler game, Vector2 position, Vector2 direction) {
         super(game, position, direction);
 
@@ -69,12 +70,17 @@ public class Player extends GameObject {
                 game.setScreen(new GameOverScreen(game, Score));
         }
 
-        if(position.y >= 480) {
-            position.y = 480;
+        if(position.y >= 460) {
+            die();
+            position.y = 460;
+            setDirection(0, position.y);
+            stateTimer--;
+            if(stateTimer < 0)
+                game.setScreen(new GameOverScreen(game, Score));
         }
 
         if(Gdx.input.isTouched() && state == STATE.ALIVE){
-           setDirection(0, SPEED);
+            setDirection(0, SPEED);
         } else {
             if(state == STATE.DEAD) {
                 setDirection(0, position.y);

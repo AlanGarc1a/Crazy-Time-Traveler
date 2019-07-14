@@ -1,291 +1,256 @@
 images.png
-size: 510, 698
+size: 512, 998
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 alien_enemy
   rotate: false
-  xy: 0, 0
+  xy: 0, 136
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: 0
 alien_enemy
   rotate: false
-  xy: 83, 0
+  xy: 415, 136
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: 1
 alien_enemy
   rotate: false
-  xy: 166, 0
+  xy: 0, 200
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: 3
 alien_enemy
   rotate: false
-  xy: 249, 0
+  xy: 249, 136
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: 4
 alien_enemy
   rotate: false
-  xy: 332, 0
+  xy: 83, 136
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: 5
 alien_enemy
   rotate: false
-  xy: 415, 0
+  xy: 332, 136
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: 6
 alien_enemy
   rotate: false
-  xy: 0, 64
+  xy: 83, 200
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: 7
 alien_enemy
   rotate: false
-  xy: 83, 64
+  xy: 166, 136
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: 8
+back-buildings
+  rotate: false
+  xy: 0, 614
+  size: 256, 192
+  orig: 256, 192
+  offset: 0, 0
+  index: -1
 buildings
   rotate: false
-  xy: 166, 64
+  xy: 166, 200
   size: 272, 104
   orig: 272, 104
   offset: 0, 0
   index: -1
 far-back-towers
   rotate: false
-  xy: 0, 168
+  xy: 0, 304
   size: 213, 142
   orig: 213, 142
   offset: 0, 0
   index: -1
+far-buildings
+  rotate: false
+  xy: 256, 614
+  size: 256, 192
+  orig: 256, 192
+  offset: 0, 0
+  index: -1
+foreground
+  rotate: false
+  xy: 0, 806
+  size: 352, 192
+  orig: 352, 192
+  offset: 0, 0
+  index: -1
 green-background
   rotate: false
-  xy: 213, 168
+  xy: 0, 454
   size: 272, 160
   orig: 272, 160
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 485, 168
+  xy: 0, 0
   size: 14, 18
   orig: 14, 18
   offset: 0, 0
   index: -1
 plane2
   rotate: false
-  xy: 0, 328
+  xy: 372, 88
   size: 74, 48
   orig: 74, 48
   offset: 0, 0
   index: 0
 plane2
   rotate: false
-  xy: 74, 328
+  xy: 300, 88
   size: 72, 48
   orig: 72, 48
   offset: 0, 0
   index: 1
 plane2
   rotate: false
-  xy: 146, 328
+  xy: 228, 88
   size: 72, 48
   orig: 72, 48
   offset: 0, 0
   index: 2
 plane2
   rotate: false
-  xy: 218, 328
+  xy: 156, 88
   size: 72, 48
   orig: 72, 48
   offset: 0, 0
   index: 3
 plane2_die
   rotate: false
-  xy: 290, 328
+  xy: 229, 0
   size: 70, 42
   orig: 70, 42
   offset: 0, 0
   index: 0
 plane2_die
   rotate: false
-  xy: 360, 328
+  xy: 0, 44
   size: 74, 41
   orig: 74, 41
   offset: 0, 0
   index: 1
 plane2_die
   rotate: false
-  xy: 434, 328
+  xy: 371, 0
   size: 72, 42
   orig: 72, 42
   offset: 0, 0
   index: 2
 plane2_die
   rotate: false
-  xy: 0, 376
+  xy: 299, 0
   size: 72, 41
   orig: 72, 41
   offset: 0, 0
   index: 3
 plane2_die
   rotate: false
-  xy: 72, 376
+  xy: 166, 0
   size: 63, 42
   orig: 63, 42
   offset: 0, 0
   index: 4
 plane2_die
   rotate: false
-  xy: 135, 376
+  xy: 14, 0
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 5
 plane
   rotate: false
-  xy: 165, 376
+  xy: 0, 88
   size: 78, 44
   orig: 78, 44
   offset: 0, 0
   index: 0
 plane
   rotate: false
-  xy: 243, 376
+  xy: 371, 44
   size: 75, 44
   orig: 75, 44
   offset: 0, 0
   index: 1
 plane
   rotate: false
-  xy: 318, 376
+  xy: 221, 44
   size: 75, 44
   orig: 75, 44
   offset: 0, 0
   index: 2
 plane
   rotate: false
-  xy: 393, 376
+  xy: 296, 44
   size: 75, 44
   orig: 75, 44
   offset: 0, 0
   index: 3
 plane_die
   rotate: false
-  xy: 0, 420
+  xy: 146, 44
   size: 75, 43
   orig: 75, 43
   offset: 0, 0
   index: 0
 plane_die
   rotate: false
-  xy: 75, 420
+  xy: 78, 88
   size: 78, 44
   orig: 78, 44
   offset: 0, 0
   index: 1
 plane_die
   rotate: false
-  xy: 153, 420
+  xy: 74, 44
   size: 72, 44
   orig: 72, 44
   offset: 0, 0
   index: 2
 plane_die
   rotate: false
-  xy: 225, 420
+  xy: 117, 0
   size: 49, 44
   orig: 49, 44
   offset: 0, 0
   index: 3
 plane_die
   rotate: false
-  xy: 274, 420
+  xy: 75, 0
   size: 42, 44
   orig: 42, 44
   offset: 0, 0
   index: 4
 plane_die
   rotate: false
-  xy: 316, 420
+  xy: 44, 0
   size: 31, 44
   orig: 31, 44
   offset: 0, 0
   index: 5
-ship
-  rotate: false
-  xy: 347, 420
-  size: 102, 64
-  orig: 102, 64
-  offset: 0, 0
-  index: 0
-ship
-  rotate: false
-  xy: 0, 484
-  size: 102, 64
-  orig: 102, 64
-  offset: 0, 0
-  index: 1
-ship
-  rotate: false
-  xy: 102, 484
-  size: 102, 64
-  orig: 102, 64
-  offset: 0, 0
-  index: 2
-ship
-  rotate: false
-  xy: 204, 484
-  size: 102, 64
-  orig: 102, 64
-  offset: 0, 0
-  index: 3
-ship
-  rotate: false
-  xy: 306, 484
-  size: 102, 64
-  orig: 102, 64
-  offset: 0, 0
-  index: 4
-ship
-  rotate: false
-  xy: 408, 484
-  size: 102, 64
-  orig: 102, 64
-  offset: 0, 0
-  index: 5
-ship
-  rotate: false
-  xy: 0, 548
-  size: 102, 64
-  orig: 102, 64
-  offset: 0, 0
-  index: 6
-ship
-  rotate: false
-  xy: 102, 548
-  size: 102, 64
-  orig: 102, 64
-  offset: 0, 0
-  index: 7
 unfinished-towers
   rotate: false
-  xy: 204, 548
+  xy: 213, 304
   size: 272, 150
   orig: 272, 150
   offset: 0, 0

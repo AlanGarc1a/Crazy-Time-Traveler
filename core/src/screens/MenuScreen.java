@@ -2,10 +2,10 @@ package screens;
 
 import Levels.ParallaxIndustrial;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -46,6 +46,7 @@ public class MenuScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        game.shapeRenderer.setProjectionMatrix(game.camera.combined);
         game.batch.setProjectionMatrix(game.camera.combined);
 
         updateScreen();
@@ -53,6 +54,12 @@ public class MenuScreen extends AbstractScreen {
         game.batch.begin();
         parallaxIndustrial.draw(game.batch);
         game.batch.end();
+
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        game.shapeRenderer.rect(253,164,90,50);
+        game.shapeRenderer.rect(100,163,125,50);
+        game.shapeRenderer.rect(398,163,80,50);
+        game.shapeRenderer.end();
 
         menuStage.act();
         menuStage.draw();
@@ -112,7 +119,7 @@ public class MenuScreen extends AbstractScreen {
         root.setFillParent(true);
         root.add(title).padBottom(50f);
         root.row();
-        menuTable.defaults().center().padLeft(20).padRight(20).uniformX();
+        menuTable.defaults().center().padLeft(20).padRight(18).uniformX();
         menuTable.add(settings);
         menuTable.add(play);
         menuTable.add(about);

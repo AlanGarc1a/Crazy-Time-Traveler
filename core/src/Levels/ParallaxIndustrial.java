@@ -1,84 +1,57 @@
 package Levels;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.game.CrazyTimeTraveler;
 import utils.Assets;
 
-public class ParallaxIndustrial {
+public class ParallaxIndustrial extends AbstractLevel{
 
-    CrazyTimeTraveler game;
+    public ParallaxIndustrial(final CrazyTimeTraveler game) {
+        super(game);
 
-    private TextureAtlas atlas;
+        layers = new TextureRegion[]{ atlas.findRegion(Assets.INDUSTRIAL_BACKGROUND), atlas.findRegion(Assets.INDUSTRIAL_FAR_BACK_TOWERS),
+                                        atlas.findRegion(Assets.INDUSTRIAL_UNFINISHED_TOWERS), atlas.findRegion(Assets.INDUSTRIAL_BUILDINGS)};
 
-    private TextureRegion backgroundImage;
-    private TextureRegion farTowersImage;
-    private TextureRegion unfinishedTowersImage;
-    private TextureRegion buildingsImage;
+        layersX = new float[4];
+        layersY = new float[4];
 
-    private int backgroundWidth, backgroundHeight;
-    private int farTowersWidth, farTowersHeight;
-    private int unfinishedTowersWidth, unfinishedTowersHeight;
-    private int buildingsWidth, buildingsHeight;
-    private int buildingsX, buildingsY, farTowersX, farTowersY, unfinishedTowersX, unfinishedTowersY;
+        layersWidth = new float[4];
+        layersHeight = new float[4];
 
-
-    public ParallaxIndustrial(CrazyTimeTraveler game){
-        this.game = game;
-
-        atlas = game.assets.getTextureAtlas();
-
-        backgroundImage = atlas.findRegion(Assets.INDUSTRIAL_BACKGROUND);
-        farTowersImage = atlas.findRegion(Assets.INDUSTRIAL_FAR_BACK_TOWERS);
-        unfinishedTowersImage = atlas.findRegion(Assets.INDUSTRIAL_UNFINISHED_TOWERS);
-        buildingsImage = atlas.findRegion(Assets.INDUSTRIAL_BUILDINGS);
-
-        backgroundWidth = backgroundImage.getRegionWidth() * 3 ;
-        backgroundHeight = backgroundImage.getRegionHeight() * 3 ;
-
-        farTowersWidth = farTowersImage.getRegionWidth() * 3;
-        farTowersHeight = farTowersImage.getRegionHeight()  * 3;
-
-        unfinishedTowersWidth = unfinishedTowersImage.getRegionWidth() * 3 ;
-        unfinishedTowersHeight = unfinishedTowersImage.getRegionHeight() * 3 ;
-
-        buildingsWidth = buildingsImage.getRegionWidth()  * 3;
-        buildingsHeight = buildingsImage.getRegionHeight()* 3 ;
-
-        buildingsX = 0;
-        buildingsY = 0;
-
-        farTowersX = 0;
-        farTowersY = 0;
-
-        unfinishedTowersX = 0;
-        unfinishedTowersY = 0;
-    }
-
-    public void update(){
-        buildingsX -= 2;
-        unfinishedTowersX -= 1;
-
-        if(buildingsX < -buildingsWidth){
-            buildingsX = 0;
+        for( int i = 0; i < layersX.length; i++){
+           layersX[i] = 0;
         }
-
-        if(unfinishedTowersX < -unfinishedTowersWidth){
-            unfinishedTowersX = 0;
+        for( int i = 0; i < layersY.length; i++){
+            layersY[i] = 0;
+        }
+        for( int i = 0; i < layersWidth.length; i++){
+            layersWidth[i] = layers[i].getRegionWidth() * 3f;
+        }
+        for( int i = 0; i < layersHeight.length; i++){
+            layersHeight[i] = layers[i].getRegionHeight() * 3f;
         }
     }
 
-    public void draw(SpriteBatch batch){
+    @Override
+    public void update(float delta) {
 
-        batch.draw(backgroundImage, 0 ,0, backgroundWidth, backgroundHeight);
+        for(int i = 0; i < layers.length; i++){
 
-        batch.draw(farTowersImage, farTowersX, farTowersY, farTowersWidth, farTowersHeight);
+            layersX[3] -= 25 * delta;
 
-        batch.draw(unfinishedTowersImage, unfinishedTowersX, unfinishedTowersY, unfinishedTowersWidth, unfinishedTowersHeight);
-        batch.draw(unfinishedTowersImage, unfinishedTowersX + unfinishedTowersWidth, unfinishedTowersY, unfinishedTowersWidth, unfinishedTowersHeight);
+            if(layersX[3] < -layersWidth[3])
+                layersX[3] = 0;
+        }
+    }
 
-        batch.draw(buildingsImage, buildingsX, buildingsY, buildingsWidth, buildingsHeight);
-        batch.draw(buildingsImage, buildingsX + buildingsWidth, buildingsY, buildingsWidth, buildingsHeight);
+    @Override
+    public void draw(SpriteBatch batch) {
+
+        for(int i = 0; i < layers.length; i++){
+            batch.draw(layers[i], layersX[i], layersY[i], layersWidth[i], layersHeight[i]);
+        }
+
+        batch.draw(layers[3], layersX[3] + layersWidth[3], layersY[3], layersWidth[3], layersHeight[3]);
     }
 }

@@ -3,6 +3,7 @@ package com.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.*;
 import screens.*;
 import utils.Assets;
@@ -16,6 +17,7 @@ public class CrazyTimeTraveler extends Game {
 	public OrthographicCamera camera;
 	public Viewport viewport;
 	public SpriteBatch batch;
+	public ShapeRenderer shapeRenderer;
 
 	public Assets assets;
 	public GamePreferences preferences;
@@ -32,6 +34,8 @@ public class CrazyTimeTraveler extends Game {
 
 		//create our batch for drawing to the screen
 		batch = new SpriteBatch();
+
+		shapeRenderer = new ShapeRenderer();
 
 		//setup our camera and viewport
 		camera = new OrthographicCamera();
@@ -60,6 +64,7 @@ public class CrazyTimeTraveler extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		shapeRenderer.dispose();
 		assets.dispose();
 	}
 }
