@@ -1,5 +1,6 @@
 package Levels;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.game.CrazyTimeTraveler;
@@ -31,10 +32,13 @@ public class ParallaxIndustrial extends AbstractLevel{
         for( int i = 0; i < layersHeight.length; i++){
             layersHeight[i] = layers[i].getRegionHeight() * 3f;
         }
+
     }
 
     @Override
     public void update(float delta) {
+
+        delta = Gdx.graphics.getDeltaTime();
 
         for(int i = 0; i < layers.length; i++){
 

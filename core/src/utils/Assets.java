@@ -18,12 +18,13 @@ public class Assets implements Disposable {
 
     FileHandleResolver resolver = new InternalFileHandleResolver();
     public static final AssetDescriptor<TextureAtlas> textureAtlas = new AssetDescriptor<TextureAtlas>("images/images.atlas", TextureAtlas.class);
+    public static final AssetDescriptor<TextureAtlas> textureAtlas2 = new AssetDescriptor<TextureAtlas>("images/images2.atlas", TextureAtlas.class);
 
     //sprites
-    public static final String ALIEN_ENEMY = "alien_enemy";
     public static final String JET = "plane";
     public static final String JET_DEATH = "plane_die";
     public static final String PLANE = "plane2";
+    public static final String PORTAL = "portal";
 
     //environment
     public static final String INDUSTRIAL_BACKGROUND = "green-background";
@@ -35,6 +36,13 @@ public class Assets implements Disposable {
     public static final String CYBER_BACK_BUILDINGS = "back-buildings";
     public static final String CYBER_FAR_BUILDINGS = "far-buildings";
     public static final String CYBER_FOREGROUND = "foreground";
+
+    //third environment
+    public static final String MOUNTAIN_BG = "parallax-mountain-bg";
+    public static final String MOUNTAIN_FOREGROUND = "parallax-mountain-foreground-trees";
+    public static final String MOUNTAIN_MOUNTAIN_FAR = "parallax-mountain-montain-far";
+    public static final String MOUNTAIN_MOUNTAINS = "parallax-mountain-mountains";
+    public static final String MOUNTAIN_TREES = "parallax-mountain-trees";
 
     //fonts
     public static final String SILVER_FONT = "font/Silver.ttf";
@@ -81,6 +89,7 @@ public class Assets implements Disposable {
     public void loadAssets(){
         assetManager.load(GRAVITY_FONT, BitmapFont.class, bigFont);
         assetManager.load(textureAtlas);
+        assetManager.load(textureAtlas2);
         loadSounds();
         loadMusic();
         assetManager.finishLoading();
@@ -99,6 +108,8 @@ public class Assets implements Disposable {
     public TextureAtlas getTextureAtlas(){
         return assetManager.get(textureAtlas);
     }
+
+    public TextureAtlas getTextureAtlas2() { return assetManager.get(textureAtlas2); }
 
     public float getProgress(){
         return assetManager.getProgress();

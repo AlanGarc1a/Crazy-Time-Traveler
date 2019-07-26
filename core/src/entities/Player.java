@@ -42,14 +42,14 @@ public class Player extends GameObject {
 
         state = STATE.ALIVE;
 
-        WIDTH = 45;
-        HEIGHT = 45;
+        WIDTH = 40;
+        HEIGHT = 40;
         STARTING_X = 50;
         STARTING_Y = 225;
 
         this.position = new Vector2(STARTING_X,STARTING_Y);
 
-        flyingAnimation = new Animation(1/15f, atlas.findRegions(Assets.JET), Animation.PlayMode.LOOP);
+        flyingAnimation = new Animation<TextureRegion>(1/15f, atlas.findRegions(Assets.JET), Animation.PlayMode.LOOP);
         deathAnimation = new Animation<TextureRegion>(1/15f, atlas.findRegions(Assets.JET_DEATH), Animation.PlayMode.LOOP);
 
         stateTimer = 6;

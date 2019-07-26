@@ -29,7 +29,7 @@ public class PlaneEnemy extends EnemyObject {
         super(game);
 
         flyingAnimation = new Animation<TextureRegion>(1 / 15f, atlas.findRegions(Assets.PLANE), Animation.PlayMode.LOOP);
-        deathAnimation = new Animation<TextureRegion>(1/15f, atlas.findRegions(Assets.PLANE));
+        deathAnimation = new Animation<TextureRegion>(1 / 15f, atlas.findRegions(Assets.PLANE));
 
         for (TextureRegion region : flyingAnimation.getKeyFrames()) {
             if (!region.isFlipX())
@@ -37,12 +37,12 @@ public class PlaneEnemy extends EnemyObject {
         }
 
         randomX = MathUtils.random(595, CrazyTimeTraveler.GAME_WIDTH );
-        randomY = MathUtils.random(0, 450 - HEIGHT );
+        randomY = MathUtils.random(0, 445 - HEIGHT );
 
         position = new Vector2(randomX, randomY);
 
-        WIDTH = 45;
-        HEIGHT = 45;
+        WIDTH = 46;
+        HEIGHT = 46;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PlaneEnemy extends EnemyObject {
     @Override
     public void reset() {
         position.x = MathUtils.random(595, CrazyTimeTraveler.GAME_WIDTH);
-        position.y = MathUtils.random(0, 430);
+        position.y = MathUtils.random(50, 430);
     }
 
     public boolean isDead(){

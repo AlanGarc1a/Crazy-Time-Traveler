@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.game.CrazyTimeTraveler;
 import entities.PlaneEnemy;
 import entities.Player;
+import entities.Portal;
 import screens.GameOverScreen;
 
 public class World {
@@ -18,7 +19,8 @@ public class World {
 
     public enum Level {
         INDUSTRIAL,
-        CYBERPUNK
+        CYBERPUNK,
+        MOUNTAINS
     }
 
     //plane pool
@@ -34,7 +36,10 @@ public class World {
     private Player player;
 
     private ParallaxIndustrial parallaxIndustrial;
+    private ParallaxMountains parallaxMountains;
     private CyberPunkWorld cyberPunkWorld;
+
+    private Portal portal;
 
     private CrazyTimeTraveler game;
 
@@ -44,9 +49,11 @@ public class World {
         planes = new Array<PlaneEnemy>();
 
         parallaxIndustrial = new ParallaxIndustrial(game);
+        parallaxMountains = new ParallaxMountains(game);
         cyberPunkWorld = new CyberPunkWorld(game);
 
         player = new Player(game, new Vector2(), new Vector2(0,0));
+        portal = new Portal(game);
     }
 
     /*
@@ -66,11 +73,16 @@ public class World {
 
     public void update(float delta){
 
+        if(player.getBounds().overlaps(portal.getBounds())){
+            currentLevel = Level.MOUNTAINS;
+        }
+
         switch(currentLevel){
 
             case INDUSTRIAL:
                 parallaxIndustrial.update(delta);
                 createPlanes();
+                portal.update();
                 player.update();
                 collisionWithPlanes();
                 break;
@@ -79,25 +91,44 @@ public class World {
                 cyberPunkWorld.update(delta);
                 player.update();
                 break;
+
+            case MOUNTAINS:
+                parallaxMountains.update(delta);
+                player.update();
+                break;
         }
     }
 
     public void draw(SpriteBatch batch){
+
+        if(player.getBounds().overlaps(portal.getBounds())){
+            currentLevel = Level.MOUNTAINS;
+        }
 
         switch(currentLevel){
 
             case INDUSTRIAL:
                 parallaxIndustrial.draw(batch);
                 game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
+                if(player.getScore() > 3) {
+                    portal.draw(batch);
+                }
                 player.draw(batch);
                 for(PlaneEnemy plane : planes)
-                    plane.draw(game.batch);
+                    plane.draw(batch);
                 break;
 
             case CYBERPUNK:
                 cyberPunkWorld.draw(batch);
                 game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
                 player.draw(batch);
+                break;
+
+            case MOUNTAINS:
+                parallaxMountains.draw(batch);
+                game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
+                player.draw(batch);
+
                 break;
         }
     }

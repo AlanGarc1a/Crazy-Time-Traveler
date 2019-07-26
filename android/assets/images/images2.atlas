@@ -1,0 +1,103 @@
+images2.png
+size: 1932, 480
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+parallax-mountain-bg
+  rotate: false
+  xy: 1660, 0
+  size: 272, 160
+  orig: 272, 160
+  offset: 0, 0
+  index: -1
+parallax-mountain-foreground-trees
+  rotate: false
+  xy: 272, 320
+  size: 544, 160
+  orig: 544, 160
+  offset: 0, 0
+  index: -1
+parallax-mountain-montain-far
+  rotate: false
+  xy: 0, 320
+  size: 272, 160
+  orig: 272, 160
+  offset: 0, 0
+  index: -1
+parallax-mountain-mountains
+  rotate: false
+  xy: 1360, 320
+  size: 544, 160
+  orig: 544, 160
+  offset: 0, 0
+  index: -1
+parallax-mountain-trees
+  rotate: false
+  xy: 816, 320
+  size: 544, 160
+  orig: 544, 160
+  offset: 0, 0
+  index: -1
+portal
+  rotate: false
+  xy: 1450, 0
+  size: 210, 320
+  orig: 210, 320
+  offset: 0, 0
+  index: 0
+portal
+  rotate: false
+  xy: 895, 0
+  size: 185, 320
+  orig: 185, 320
+  offset: 0, 0
+  index: 1
+portal
+  rotate: false
+  xy: 1080, 0
+  size: 185, 320
+  orig: 185, 320
+  offset: 0, 0
+  index: 2
+portal
+  rotate: false
+  xy: 340, 0
+  size: 185, 320
+  orig: 185, 320
+  offset: 0, 0
+  index: 3
+portal
+  rotate: false
+  xy: 525, 0
+  size: 185, 320
+  orig: 185, 320
+  offset: 0, 0
+  index: 4
+portal
+  rotate: false
+  xy: 710, 0
+  size: 185, 320
+  orig: 185, 320
+  offset: 0, 0
+  index: 5
+portal
+  rotate: false
+  xy: 170, 0
+  size: 170, 320
+  orig: 170, 320
+  offset: 0, 0
+  index: 6
+portal
+  rotate: false
+  xy: 0, 0
+  size: 170, 320
+  orig: 170, 320
+  offset: 0, 0
+  index: 7
+portal
+  rotate: false
+  xy: 1265, 0
+  size: 185, 320
+  orig: 185, 320
+  offset: 0, 0
+  index: 8

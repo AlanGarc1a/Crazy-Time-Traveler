@@ -8,7 +8,7 @@ import com.game.CrazyTimeTraveler;
 public abstract class AbstractLevel {
 
     protected CrazyTimeTraveler game;
-    protected TextureAtlas atlas;
+    protected TextureAtlas atlas, atlas2;
 
     protected TextureRegion[] layers;
     protected float[] layersX;
@@ -16,16 +16,12 @@ public abstract class AbstractLevel {
     protected float[] layersWidth;
     protected float[] layersHeight;
 
-    protected int timerr;
 
     public AbstractLevel(final CrazyTimeTraveler game){
         this.game = game;
 
         atlas = game.assets.getTextureAtlas();
-    }
-
-    public void changeLevel(){
-
+        atlas2 = game.assets.getTextureAtlas2();
     }
 
     public abstract void update(float delta);

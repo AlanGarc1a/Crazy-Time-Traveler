@@ -13,7 +13,7 @@ public abstract class GameObject {
     protected Vector2 direction;
 
     protected CrazyTimeTraveler game;
-    protected TextureAtlas atlas;
+    protected TextureAtlas atlas, atlas2;
 
     protected int WIDTH;
     protected int HEIGHT;
@@ -24,6 +24,7 @@ public abstract class GameObject {
         this.direction = direction;
 
         atlas = game.assets.getTextureAtlas();
+        atlas2 = game.assets.getTextureAtlas2();
     }
 
     public abstract void update();

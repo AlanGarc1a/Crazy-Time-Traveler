@@ -7,8 +7,8 @@ import com.game.CrazyTimeTraveler;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 640;
-		config.height = 480;
+		config.width = 1040;
+		config.height = 640;
 		config.title = "Crazy-Time-Traveler";
 		new LwjglApplication(new CrazyTimeTraveler(), config);
 	}
