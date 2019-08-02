@@ -1,102 +1,186 @@
 images2.png
-size: 1932, 480
+size: 816, 1344
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 parallax-mountain-bg
   rotate: false
-  xy: 1660, 0
+  xy: 0, 64
   size: 272, 160
   orig: 272, 160
   offset: 0, 0
   index: -1
 parallax-mountain-foreground-trees
   rotate: false
-  xy: 272, 320
+  xy: 272, 64
   size: 544, 160
   orig: 544, 160
   offset: 0, 0
   index: -1
 parallax-mountain-montain-far
   rotate: false
-  xy: 0, 320
+  xy: 0, 224
   size: 272, 160
   orig: 272, 160
   offset: 0, 0
   index: -1
 parallax-mountain-mountains
   rotate: false
-  xy: 1360, 320
+  xy: 272, 224
   size: 544, 160
   orig: 544, 160
   offset: 0, 0
   index: -1
 parallax-mountain-trees
   rotate: false
-  xy: 816, 320
+  xy: 0, 384
   size: 544, 160
   orig: 544, 160
   offset: 0, 0
   index: -1
+police_car
+  rotate: false
+  xy: 455, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+police_car
+  rotate: false
+  xy: 327, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+police_car
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+police_car
+  rotate: false
+  xy: 128, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+police_car_die
+  rotate: false
+  xy: 263, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+police_car_die
+  rotate: false
+  xy: 192, 0
+  size: 71, 64
+  orig: 71, 64
+  offset: 0, 0
+  index: 1
+police_car_die
+  rotate: false
+  xy: 64, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+police_car_die
+  rotate: false
+  xy: 647, 0
+  size: 65, 64
+  orig: 65, 64
+  offset: 0, 0
+  index: 3
+police_car_die
+  rotate: false
+  xy: 391, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+police_car_die
+  rotate: false
+  xy: 583, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+police_car_die
+  rotate: false
+  xy: 712, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+police_car_die
+  rotate: false
+  xy: 519, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 7
 portal
   rotate: false
-  xy: 1450, 0
+  xy: 185, 1024
   size: 210, 320
   orig: 210, 320
   offset: 0, 0
   index: 0
 portal
   rotate: false
-  xy: 895, 0
+  xy: 580, 1024
   size: 185, 320
   orig: 185, 320
   offset: 0, 0
   index: 1
 portal
   rotate: false
-  xy: 1080, 0
+  xy: 525, 704
   size: 185, 320
   orig: 185, 320
   offset: 0, 0
   index: 2
 portal
   rotate: false
-  xy: 340, 0
+  xy: 0, 1024
   size: 185, 320
   orig: 185, 320
   offset: 0, 0
   index: 3
 portal
   rotate: false
-  xy: 525, 0
+  xy: 170, 704
   size: 185, 320
   orig: 185, 320
   offset: 0, 0
   index: 4
 portal
   rotate: false
-  xy: 710, 0
+  xy: 544, 384
   size: 185, 320
   orig: 185, 320
   offset: 0, 0
   index: 5
 portal
   rotate: false
-  xy: 170, 0
+  xy: 355, 704
   size: 170, 320
   orig: 170, 320
   offset: 0, 0
   index: 6
 portal
   rotate: false
-  xy: 0, 0
+  xy: 0, 704
   size: 170, 320
   orig: 170, 320
   offset: 0, 0
   index: 7
 portal
   rotate: false
-  xy: 1265, 0
+  xy: 395, 1024
   size: 185, 320
   orig: 185, 320
   offset: 0, 0

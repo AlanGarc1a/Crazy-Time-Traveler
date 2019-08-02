@@ -11,11 +11,6 @@ import utils.Assets;
 
 public class PlaneEnemy extends EnemyObject {
 
-    public enum ENEMY_STATE{
-        ALIVE,
-        DEAD
-    }
-
     ENEMY_STATE enemy_state = ENEMY_STATE.ALIVE;
 
     private Animation<TextureRegion> flyingAnimation;
@@ -23,7 +18,6 @@ public class PlaneEnemy extends EnemyObject {
 
     private float randomX;
     private float randomY;
-    private boolean isDead;
 
     public PlaneEnemy(CrazyTimeTraveler game) {
         super(game);
@@ -88,7 +82,4 @@ public class PlaneEnemy extends EnemyObject {
         position.y = MathUtils.random(50, 430);
     }
 
-    public boolean isDead(){
-        return isDead;
-    }
 }

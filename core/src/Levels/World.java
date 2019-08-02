@@ -6,15 +6,16 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.game.CrazyTimeTraveler;
-import entities.PlaneEnemy;
-import entities.Player;
-import entities.Portal;
+import entities.*;
 import screens.GameOverScreen;
 
 public class World {
 
-    //array of planes
+    //array of enemies
     private Array<PlaneEnemy> planes;
+    private Array<PoliceCar> policeCars;
+    private Array<AlienEnemy> alienEnemies;
+
     private float timer = TimeUtils.nanoTime();
 
     public enum Level {
@@ -31,7 +32,23 @@ public class World {
         }
     };
 
-    Level currentLevel = Level.INDUSTRIAL;
+    //police car pool
+    private final Pool<PoliceCar> policeCarPool = new Pool<PoliceCar>(3) {
+        @Override
+        protected PoliceCar newObject() {
+            return new PoliceCar(game);
+        }
+    };
+
+    //alien pool
+    private final Pool<AlienEnemy> alienEnemyPool = new Pool<AlienEnemy>(3) {
+        @Override
+        protected AlienEnemy newObject() {
+            return new AlienEnemy(game);
+        }
+    };
+
+    Level currentLevel = Level.CYBERPUNK;
 
     private Player player;
 
@@ -47,6 +64,8 @@ public class World {
         this.game = game;
 
         planes = new Array<PlaneEnemy>();
+        policeCars = new Array<PoliceCar>();
+        alienEnemies = new Array<AlienEnemy>();
 
         parallaxIndustrial = new ParallaxIndustrial(game);
         parallaxMountains = new ParallaxMountains(game);
@@ -71,48 +90,58 @@ public class World {
          }
     }
 
-    public void update(float delta){
+    private void createPoliceCars(){
+        PoliceCar policeCar1 = policeCarPool.obtain();
 
-        if(player.getBounds().overlaps(portal.getBounds())){
-            currentLevel = Level.MOUNTAINS;
+        if(TimeUtils.nanoTime() - timer > 1000000000) {
+            policeCars.add(policeCar1);
+            timer = TimeUtils.nanoTime();
         }
+    }
+
+    private void createAlienEnemy(){
+        AlienEnemy alienEnemy = alienEnemyPool.obtain();
+
+        if(TimeUtils.nanoTime() - timer > 1000000000){
+            alienEnemies.add(alienEnemy);
+            timer = TimeUtils.nanoTime();
+        }
+    }
+
+    public void update(float delta){
 
         switch(currentLevel){
 
             case INDUSTRIAL:
                 parallaxIndustrial.update(delta);
                 createPlanes();
-                portal.update();
                 player.update();
                 collisionWithPlanes();
                 break;
 
             case CYBERPUNK:
                 cyberPunkWorld.update(delta);
+                createPoliceCars();
                 player.update();
+                collisionWithPoliceCar();
                 break;
 
             case MOUNTAINS:
                 parallaxMountains.update(delta);
+                createAlienEnemy();
                 player.update();
+                collisionWithAliens();
                 break;
         }
     }
 
     public void draw(SpriteBatch batch){
 
-        if(player.getBounds().overlaps(portal.getBounds())){
-            currentLevel = Level.MOUNTAINS;
-        }
-
         switch(currentLevel){
 
             case INDUSTRIAL:
                 parallaxIndustrial.draw(batch);
                 game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
-                if(player.getScore() > 3) {
-                    portal.draw(batch);
-                }
                 player.draw(batch);
                 for(PlaneEnemy plane : planes)
                     plane.draw(batch);
@@ -122,13 +151,16 @@ public class World {
                 cyberPunkWorld.draw(batch);
                 game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
                 player.draw(batch);
+                for(PoliceCar car : policeCars)
+                    car.draw(batch);
                 break;
 
             case MOUNTAINS:
                 parallaxMountains.draw(batch);
                 game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
                 player.draw(batch);
-
+                for(AlienEnemy alienEnemy : alienEnemies)
+                    alienEnemy.draw(batch);
                 break;
         }
     }
@@ -147,10 +179,56 @@ public class World {
             }
             if(planeEnemy.getPosition().x + planeEnemy.getWIDTH() < 0) {
                 player.addToScore();
-                //game.assets.pickUpSound.play(1f);
                 planes.removeValue(planeEnemy, false);
                 planePool.free(planeEnemy);
             }
         }
     }
+
+    private void collisionWithPoliceCar(){
+
+        for(PoliceCar carEnemy : policeCars){
+            carEnemy.update();
+            if(player.getBounds().overlaps(carEnemy.getRectangle())){
+                carEnemy.die();
+                player.die();
+                policeCars.removeValue(carEnemy, false);
+                policeCarPool.free(carEnemy);
+                if(player.state == Player.STATE.DEAD && player.getStateTimer() < 0)
+                    game.setScreen(new GameOverScreen(game, player.getScore()));
+            }
+            if(carEnemy.getPosition().x + carEnemy.getWIDTH() < 0) {
+                player.addToScore();
+                policeCars.removeValue(carEnemy, false);
+                policeCarPool.free(carEnemy);
+            }
+        }
+    }
+
+    private void collisionWithAliens(){
+
+        for(AlienEnemy alienEnemy : alienEnemies){
+            alienEnemy.update();
+            if(player.getBounds().overlaps(alienEnemy.getRectangle())){
+                alienEnemy.die();
+                player.die();
+               alienEnemies.removeValue(alienEnemy, false);
+               alienEnemyPool.free(alienEnemy);
+                if(player.state == Player.STATE.DEAD && player.getStateTimer() < 0)
+                    game.setScreen(new GameOverScreen(game, player.getScore()));
+            }
+            if(alienEnemy.getPosition().x + alienEnemy.getWIDTH() < 0) {
+                player.addToScore();
+                alienEnemies.removeValue(alienEnemy, false);
+                alienEnemyPool.free(alienEnemy);
+            }
+        }
+    }
+
+    private void changeLevel(){
+        if(player.getBounds().overlaps(portal.getBounds())){
+
+        }
+    }
+
 }

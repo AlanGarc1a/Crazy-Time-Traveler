@@ -21,10 +21,13 @@ public class Assets implements Disposable {
     public static final AssetDescriptor<TextureAtlas> textureAtlas2 = new AssetDescriptor<TextureAtlas>("images/images2.atlas", TextureAtlas.class);
 
     //sprites
+    public static final String ALIEN_ENEMY = "alien_enemy";
     public static final String JET = "plane";
     public static final String JET_DEATH = "plane_die";
     public static final String PLANE = "plane2";
     public static final String PORTAL = "portal";
+    public static final String POLICE_CAR = "police_car";
+    public static final String POLICE_CAR_DIE = "police_car_die";
 
     //environment
     public static final String INDUSTRIAL_BACKGROUND = "green-background";

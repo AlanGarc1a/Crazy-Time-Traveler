@@ -9,17 +9,24 @@ import com.game.CrazyTimeTraveler;
 
 public abstract class EnemyObject implements Pool.Poolable {
 
+    public enum ENEMY_STATE{
+        ALIVE,
+        DEAD
+    }
+
     protected Vector2 position;
     protected int WIDTH;
     protected int HEIGHT;
     protected float elapsedTime;
+    protected boolean isDead;
 
     protected CrazyTimeTraveler game;
-    protected TextureAtlas atlas;
+    protected TextureAtlas atlas, atlas2;
 
     public EnemyObject(CrazyTimeTraveler game){
         this.game = game;
         atlas = game.assets.getTextureAtlas();
+        atlas2 = game.assets.getTextureAtlas2();
     }
 
     public abstract void update();
@@ -42,5 +49,9 @@ public abstract class EnemyObject implements Pool.Poolable {
 
     public int getHEIGHT(){
         return HEIGHT;
+    }
+
+    public boolean isDead(){
+        return isDead;
     }
 }

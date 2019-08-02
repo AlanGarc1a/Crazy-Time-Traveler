@@ -40,19 +40,27 @@ public class ParallaxIndustrial extends AbstractLevel{
 
         delta = Gdx.graphics.getDeltaTime();
 
-        for(int i = 0; i < layers.length; i++){
+        layersX[1] -= 20 * delta;
+        layersX[2] -= 30 * delta;
+        layersX[3] -= 45 * delta;
 
-            layersX[3] -= 25 * delta;
+        if(layersX[1] < -layersWidth[1])
+            layersX[1] = 0;
 
-            if(layersX[3] < -layersWidth[3])
-                layersX[3] = 0;
-        }
+        if(layersX[2] < -layersWidth[2])
+            layersX[2] = 0;
+
+        if(layersX[3] < -layersWidth[3])
+            layersX[3] = 0;
+
+
     }
 
     @Override
     public void draw(SpriteBatch batch) {
 
         for(int i = 0; i < layers.length; i++){
+            batch.draw(layers[2], layersX[2] + layersWidth[2], layersY[2], layersWidth[2], layersHeight[2]);
             batch.draw(layers[i], layersX[i], layersY[i], layersWidth[i], layersHeight[i]);
         }
 

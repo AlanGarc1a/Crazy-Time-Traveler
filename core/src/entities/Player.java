@@ -1,15 +1,12 @@
 package entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.game.CrazyTimeTraveler;
 import screens.GameOverScreen;
-import screens.GameScreen;
 import utils.Assets;
 
 public class Player extends GameObject {
@@ -70,9 +67,9 @@ public class Player extends GameObject {
                 game.setScreen(new GameOverScreen(game, Score));
         }
 
-        if(position.y >= 460) {
+        if(position.y >= 440) {
             die();
-            position.y = 460;
+            position.y = 440;
             setDirection(0, position.y);
             stateTimer--;
             if(stateTimer < 0)

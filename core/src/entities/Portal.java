@@ -17,7 +17,7 @@ public class Portal{
     private TextureAtlas atlas2;
     private Animation<TextureRegion> portalRegions;
     private float elapsedTime;
-    private float speed = 45f;
+    private float speed = 55f;
     private Vector2 position;
     private int width, height;
 
@@ -33,7 +33,6 @@ public class Portal{
     }
 
     public void update() {
-
         position.x -= speed * Gdx.graphics.getDeltaTime();
     }
 
@@ -42,6 +41,10 @@ public class Portal{
 
         batch.draw(portalRegions.getKeyFrame(elapsedTime, true), position.x, position.y, width ,height);
     }
+
+    public int getWidth() { return width; }
+
+    public float getX() { return position.x; }
 
     public Rectangle getBounds(){ return new Rectangle(position.x, position.y, width, height); }
 }

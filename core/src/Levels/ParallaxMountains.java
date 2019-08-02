@@ -27,10 +27,10 @@ public class ParallaxMountains extends AbstractLevel {
             layersY[i] = 0;
         }
         for( int i = 0; i < layersWidth.length; i++){
-            layersWidth[i] = layers[i].getRegionWidth() * 3.0f;
+            layersWidth[i] = layers[i].getRegionWidth() * 3.1f;
         }
         for( int i = 0; i < layersHeight.length; i++){
-            layersHeight[i] = layers[i].getRegionHeight() * 3.0f;
+            layersHeight[i] = layers[i].getRegionHeight() * 3.1f;
         }
     }
 
@@ -38,19 +38,25 @@ public class ParallaxMountains extends AbstractLevel {
     public void update(float delta) {
         delta = Gdx.graphics.getDeltaTime();
 
-        for(int i = 0; i < layers.length; i++){
+        layersX[2] -= 20 * delta;
+        layersX[3] -= 35 * delta;
+        layersX[4] -= 45 * delta;
 
-            layersX[4] -= 25 * delta;
 
-            if(layersX[4] < -layersWidth[4])
-                layersX[4] = 0;
-        }
+        if(layersX[2] < -layersWidth[2])
+            layersX[2] = 0;
+        if(layersX[3] < -layersWidth[3])
+            layersX[3] = 0;
+        if(layersX[4] < -layersWidth[4])
+            layersX[4] = 0;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
 
         for(int i = 0; i < layers.length; i++){
+            batch.draw(layers[2], layersX[2] + layersWidth[2], layersY[2], layersWidth[2], layersHeight[2]);
+            batch.draw(layers[3], layersX[3] + layersWidth[3], layersY[3], layersWidth[3], layersHeight[3]);
             batch.draw(layers[i], layersX[i], layersY[i], layersWidth[i], layersHeight[i]);
         }
         batch.draw(layers[4], layersX[4] + layersWidth[4], layersY[4], layersWidth[4], layersHeight[4]);
