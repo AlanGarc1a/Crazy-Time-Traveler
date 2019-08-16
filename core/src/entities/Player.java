@@ -22,8 +22,8 @@ public class Player extends GameObject {
     private Animation<TextureRegion> flyingAnimation;
     private Animation<TextureRegion> deathAnimation;
 
-    private static final int SPEED = 200;
-    private static final float GRAVITY = 150f;
+    private static final int SPEED = 150;
+    private static final float GRAVITY = 250f;
 
     private float STARTING_X;
     private float STARTING_Y;

@@ -3,7 +3,10 @@ package Levels;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.game.CrazyTimeTraveler;
+import entities.Player;
+import entities.Portal;
 
 public abstract class AbstractLevel {
 
@@ -15,9 +18,10 @@ public abstract class AbstractLevel {
     protected float[] layersY;
     protected float[] layersWidth;
     protected float[] layersHeight;
-
+    protected Portal portal;
 
     public AbstractLevel(final CrazyTimeTraveler game){
+        this.portal = new Portal(game);
         this.game = game;
 
         atlas = game.assets.getTextureAtlas();

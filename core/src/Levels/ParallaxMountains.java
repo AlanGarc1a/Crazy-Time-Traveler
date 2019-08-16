@@ -3,7 +3,14 @@ package Levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.game.CrazyTimeTraveler;
+import entities.PlaneEnemy;
+import entities.Player;
+import entities.Portal;
+import screens.GameOverScreen;
 import utils.Assets;
 
 public class ParallaxMountains extends AbstractLevel {
@@ -49,6 +56,7 @@ public class ParallaxMountains extends AbstractLevel {
             layersX[3] = 0;
         if(layersX[4] < -layersWidth[4])
             layersX[4] = 0;
+
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.game.CrazyTimeTraveler;
+import entities.Player;
+import entities.Portal;
 import utils.Assets;
 
 public class CyberPunkWorld extends AbstractLevel {
@@ -40,8 +42,8 @@ public class CyberPunkWorld extends AbstractLevel {
     public void update(float delta) {
         delta = Gdx.graphics.getDeltaTime();
 
-        layersX[1] -= 45 * delta;
-        layersX[2] -= 55 * delta;
+        layersX[1] -= 55 * delta;
+        layersX[2] -= 75 * delta;
 
         if (layersX[1] < -layersWidth[1])
             layersX[1] = 0;

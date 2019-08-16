@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 import com.game.CrazyTimeTraveler;
 import utils.Assets;
 
@@ -17,7 +18,7 @@ public class Portal{
     private TextureAtlas atlas2;
     private Animation<TextureRegion> portalRegions;
     private float elapsedTime;
-    private float speed = 55f;
+    private float speed = 95f;
     private Vector2 position;
     private int width, height;
 
@@ -44,7 +45,12 @@ public class Portal{
 
     public int getWidth() { return width; }
 
-    public float getX() { return position.x; }
+    public float getPositionX() { return position.x; }
 
     public Rectangle getBounds(){ return new Rectangle(position.x, position.y, width, height); }
+
+    public void reset() {
+        position.x = MathUtils.random(CrazyTimeTraveler.GAME_WIDTH, 610);
+        position.y = MathUtils.random(200, 350);
+    }
 }

@@ -72,6 +72,6 @@ public class AlienEnemy extends EnemyObject {
     @Override
     public void reset() {
         position.x = MathUtils.random(595, CrazyTimeTraveler.GAME_WIDTH);
-        position.y = MathUtils.random(50, 430);
+        position.y = MathUtils.random(50, 425);
     }
 }

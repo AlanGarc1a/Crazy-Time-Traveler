@@ -22,6 +22,9 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        
+        //for error fix 
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,7 +33,8 @@ android {
         }
     }
     dependencies {
-
+        implementation 'com.android.support:multidex:1.0.3'
+        compile 'com.google.android.gms:play-services:7.8.0'
     }
 }
 

@@ -93,6 +93,7 @@ public class GameScreen extends AbstractScreen {
 
             if(pauseBounds.contains(touchpoint.x, touchpoint.y)){
                 gameState = GAMESTATE.PAUSED;
+                //game.adsController.showBannerAd();
             }
         }
 

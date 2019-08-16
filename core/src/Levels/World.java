@@ -1,5 +1,6 @@
 package Levels;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -16,7 +17,8 @@ public class World {
     private Array<PoliceCar> policeCars;
     private Array<AlienEnemy> alienEnemies;
 
-    private float timer = TimeUtils.nanoTime();
+    private Array<Portal> portals;
+    private float portalTimer = 0;
 
     public enum Level {
         INDUSTRIAL,
@@ -48,30 +50,32 @@ public class World {
         }
     };
 
-    Level currentLevel = Level.CYBERPUNK;
+    Level currentLevel = Level.INDUSTRIAL;
+
+    protected float timer = TimeUtils.nanoTime();
 
     private Player player;
+    private Portal portal;
 
     private ParallaxIndustrial parallaxIndustrial;
     private ParallaxMountains parallaxMountains;
     private CyberPunkWorld cyberPunkWorld;
-
-    private Portal portal;
 
     private CrazyTimeTraveler game;
 
     public World(final CrazyTimeTraveler game){
         this.game = game;
 
-        planes = new Array<PlaneEnemy>();
         policeCars = new Array<PoliceCar>();
         alienEnemies = new Array<AlienEnemy>();
+        planes = new Array<PlaneEnemy>();
+
+        player = new Player(game, new Vector2(), new Vector2(0,0));
 
         parallaxIndustrial = new ParallaxIndustrial(game);
         parallaxMountains = new ParallaxMountains(game);
         cyberPunkWorld = new CyberPunkWorld(game);
-
-        player = new Player(game, new Vector2(), new Vector2(0,0));
+        portals = new Array<Portal>(1);
         portal = new Portal(game);
     }
 
@@ -84,10 +88,10 @@ public class World {
     private void createPlanes(){
         PlaneEnemy plane1 = planePool.obtain();
 
-         if(TimeUtils.nanoTime() - timer > 1000000000) {
-             planes.add(plane1);
-             timer = TimeUtils.nanoTime();
-         }
+        if(TimeUtils.nanoTime() - timer > 1000000000) {
+            planes.add(plane1);
+            timer = TimeUtils.nanoTime();
+        }
     }
 
     private void createPoliceCars(){
@@ -116,6 +120,19 @@ public class World {
                 parallaxIndustrial.update(delta);
                 createPlanes();
                 player.update();
+                if(player. getScore() > 5){
+                    portalTimer += Gdx.graphics.getDeltaTime();
+                    if(portalTimer > 10){
+                        portals.add(portal);
+                        portal.update();
+                        if(player.getBounds().overlaps(portal.getBounds())){
+                            portals.removeValue(portal, false);
+                            portal.reset();
+                            portalTimer = 0;
+                            currentLevel = Level.CYBERPUNK;
+                        }
+                    }
+                }
                 collisionWithPlanes();
                 break;
 
@@ -123,6 +140,19 @@ public class World {
                 cyberPunkWorld.update(delta);
                 createPoliceCars();
                 player.update();
+                if(player. getScore() > 5){
+                    portalTimer += Gdx.graphics.getDeltaTime();
+                    if(portalTimer > 10){
+                        portals.add(portal);
+                        portal.update();
+                        if(player.getBounds().overlaps(portal.getBounds())){
+                            portals.removeValue(portal, false);
+                            portal.reset();
+                            portalTimer = 0;
+                            currentLevel = Level.MOUNTAINS;
+                        }
+                    }
+                }
                 collisionWithPoliceCar();
                 break;
 
@@ -130,6 +160,19 @@ public class World {
                 parallaxMountains.update(delta);
                 createAlienEnemy();
                 player.update();
+                if(player. getScore() > 5){
+                    portalTimer += Gdx.graphics.getDeltaTime();
+                    if(portalTimer > 10){
+                        portals.add(portal);
+                        portal.update();
+                        if(player.getBounds().overlaps(portal.getBounds())){
+                            portals.removeValue(portal, false);
+                            portal.reset();
+                            portalTimer = 0;
+                            currentLevel = Level.INDUSTRIAL;
+                        }
+                    }
+                }
                 collisionWithAliens();
                 break;
         }
@@ -143,6 +186,19 @@ public class World {
                 parallaxIndustrial.draw(batch);
                 game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
                 player.draw(batch);
+                if(player. getScore() > 5){
+                    portalTimer += Gdx.graphics.getDeltaTime();
+                    if(portalTimer > 5){
+                        portals.add(portal);
+                        portal.draw(batch);
+                        if(player.getBounds().overlaps(portal.getBounds())){
+                            portals.removeValue(portal, false);
+                            portal.reset();
+                            portalTimer = 0;
+                            currentLevel = Level.CYBERPUNK;
+                        }
+                    }
+                }
                 for(PlaneEnemy plane : planes)
                     plane.draw(batch);
                 break;
@@ -151,6 +207,19 @@ public class World {
                 cyberPunkWorld.draw(batch);
                 game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
                 player.draw(batch);
+                if(player. getScore() > 5){
+                    portalTimer += Gdx.graphics.getDeltaTime();
+                    if(portalTimer > 5){
+                        portals.add(portal);
+                        portal.draw(batch);
+                        if(player.getBounds().overlaps(portal.getBounds())){
+                            portals.removeValue(portal, false);
+                            portal.reset();
+                            portalTimer = 0;
+                             currentLevel = Level.MOUNTAINS;
+                        }
+                    }
+                }
                 for(PoliceCar car : policeCars)
                     car.draw(batch);
                 break;
@@ -159,6 +228,19 @@ public class World {
                 parallaxMountains.draw(batch);
                 game.assets.silverFont.draw(game.batch, "" + player.getScore(), 20, 460);
                 player.draw(batch);
+                if(player. getScore() > 5){
+                    portalTimer += Gdx.graphics.getDeltaTime();
+                    if(portalTimer > 5){
+                        portals.add(portal);
+                        portal.draw(batch);
+                        if(player.getBounds().overlaps(portal.getBounds())){
+                            portals.removeValue(portal, false);
+                            portal.reset();
+                            portalTimer = 0;
+                            currentLevel = Level.INDUSTRIAL;
+                        }
+                    }
+                }
                 for(AlienEnemy alienEnemy : alienEnemies)
                     alienEnemy.draw(batch);
                 break;
@@ -222,12 +304,6 @@ public class World {
                 alienEnemies.removeValue(alienEnemy, false);
                 alienEnemyPool.free(alienEnemy);
             }
-        }
-    }
-
-    private void changeLevel(){
-        if(player.getBounds().overlaps(portal.getBounds())){
-
         }
     }
 

@@ -9,6 +9,8 @@ import screens.*;
 import utils.Assets;
 import utils.GamePreferences;
 
+import javax.swing.text.View;
+
 public class CrazyTimeTraveler extends Game {
 
 	public static int GAME_WIDTH = 600;
@@ -22,12 +24,20 @@ public class CrazyTimeTraveler extends Game {
 	public Assets assets;
 	public GamePreferences preferences;
 
+	public AdsController adsController;
+
+	//constructor of this class goes here
+	/*public CrazyTimeTraveler(AdsController adsController){
+		this.adsController = adsController;
+	}*/
+
 	/*
 	   this function gets called immediately when our app starts
 	*/
 	@Override
 	public void create () {
 
+		//adsController.showBannerAd();
 		preferences = new GamePreferences(this);
 
 		assets = new Assets();

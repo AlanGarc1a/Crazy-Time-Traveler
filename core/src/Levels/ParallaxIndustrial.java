@@ -3,7 +3,14 @@ package Levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.game.CrazyTimeTraveler;
+import entities.PlaneEnemy;
+import entities.Player;
+import entities.Portal;
+import screens.GameOverScreen;
 import utils.Assets;
 
 public class ParallaxIndustrial extends AbstractLevel{
@@ -32,7 +39,6 @@ public class ParallaxIndustrial extends AbstractLevel{
         for( int i = 0; i < layersHeight.length; i++){
             layersHeight[i] = layers[i].getRegionHeight() * 3f;
         }
-
     }
 
     @Override
@@ -41,8 +47,8 @@ public class ParallaxIndustrial extends AbstractLevel{
         delta = Gdx.graphics.getDeltaTime();
 
         layersX[1] -= 20 * delta;
-        layersX[2] -= 30 * delta;
-        layersX[3] -= 45 * delta;
+        layersX[2] -= 40 * delta;
+        layersX[3] -= 65 * delta;
 
         if(layersX[1] < -layersWidth[1])
             layersX[1] = 0;
@@ -52,8 +58,6 @@ public class ParallaxIndustrial extends AbstractLevel{
 
         if(layersX[3] < -layersWidth[3])
             layersX[3] = 0;
-
-
     }
 
     @Override
