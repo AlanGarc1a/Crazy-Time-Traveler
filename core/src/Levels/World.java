@@ -17,7 +17,6 @@ public class World {
     private Array<PoliceCar> policeCars;
     private Array<AlienEnemy> alienEnemies;
 
-    private Array<Portal> portals;
     private float portalTimer = 0;
 
     public enum Level {
@@ -75,7 +74,6 @@ public class World {
         parallaxIndustrial = new ParallaxIndustrial(game);
         parallaxMountains = new ParallaxMountains(game);
         cyberPunkWorld = new CyberPunkWorld(game);
-        portals = new Array<Portal>(1);
         portal = new Portal(game);
     }
 
@@ -123,10 +121,8 @@ public class World {
                 if(player. getScore() > 5){
                     portalTimer += Gdx.graphics.getDeltaTime();
                     if(portalTimer > 10){
-                        portals.add(portal);
                         portal.update();
                         if(player.getBounds().overlaps(portal.getBounds())){
-                            portals.removeValue(portal, false);
                             portal.reset();
                             portalTimer = 0;
                             currentLevel = Level.CYBERPUNK;
@@ -143,10 +139,8 @@ public class World {
                 if(player. getScore() > 5){
                     portalTimer += Gdx.graphics.getDeltaTime();
                     if(portalTimer > 10){
-                        portals.add(portal);
                         portal.update();
                         if(player.getBounds().overlaps(portal.getBounds())){
-                            portals.removeValue(portal, false);
                             portal.reset();
                             portalTimer = 0;
                             currentLevel = Level.MOUNTAINS;
@@ -163,10 +157,8 @@ public class World {
                 if(player. getScore() > 5){
                     portalTimer += Gdx.graphics.getDeltaTime();
                     if(portalTimer > 10){
-                        portals.add(portal);
                         portal.update();
                         if(player.getBounds().overlaps(portal.getBounds())){
-                            portals.removeValue(portal, false);
                             portal.reset();
                             portalTimer = 0;
                             currentLevel = Level.INDUSTRIAL;
@@ -189,10 +181,8 @@ public class World {
                 if(player. getScore() > 5){
                     portalTimer += Gdx.graphics.getDeltaTime();
                     if(portalTimer > 5){
-                        portals.add(portal);
                         portal.draw(batch);
                         if(player.getBounds().overlaps(portal.getBounds())){
-                            portals.removeValue(portal, false);
                             portal.reset();
                             portalTimer = 0;
                             currentLevel = Level.CYBERPUNK;
@@ -210,13 +200,11 @@ public class World {
                 if(player. getScore() > 5){
                     portalTimer += Gdx.graphics.getDeltaTime();
                     if(portalTimer > 5){
-                        portals.add(portal);
                         portal.draw(batch);
                         if(player.getBounds().overlaps(portal.getBounds())){
-                            portals.removeValue(portal, false);
                             portal.reset();
                             portalTimer = 0;
-                             currentLevel = Level.MOUNTAINS;
+                            currentLevel = Level.MOUNTAINS;
                         }
                     }
                 }
@@ -231,10 +219,8 @@ public class World {
                 if(player. getScore() > 5){
                     portalTimer += Gdx.graphics.getDeltaTime();
                     if(portalTimer > 5){
-                        portals.add(portal);
                         portal.draw(batch);
                         if(player.getBounds().overlaps(portal.getBounds())){
-                            portals.removeValue(portal, false);
                             portal.reset();
                             portalTimer = 0;
                             currentLevel = Level.INDUSTRIAL;
@@ -259,6 +245,10 @@ public class World {
                 if(player.state == Player.STATE.DEAD && player.getStateTimer() < 0)
                     game.setScreen(new GameOverScreen(game, player.getScore()));
             }
+            if(currentLevel == Level.CYBERPUNK){
+                planes.removeValue(planeEnemy, false);
+                planePool.free(planeEnemy);
+            }
             if(planeEnemy.getPosition().x + planeEnemy.getWIDTH() < 0) {
                 player.addToScore();
                 planes.removeValue(planeEnemy, false);
@@ -279,6 +269,10 @@ public class World {
                 if(player.state == Player.STATE.DEAD && player.getStateTimer() < 0)
                     game.setScreen(new GameOverScreen(game, player.getScore()));
             }
+            if(currentLevel == Level.MOUNTAINS){
+                policeCars.removeValue(carEnemy, false);
+                policeCarPool.free(carEnemy);
+            }
             if(carEnemy.getPosition().x + carEnemy.getWIDTH() < 0) {
                 player.addToScore();
                 policeCars.removeValue(carEnemy, false);
@@ -294,10 +288,14 @@ public class World {
             if(player.getBounds().overlaps(alienEnemy.getRectangle())){
                 alienEnemy.die();
                 player.die();
-               alienEnemies.removeValue(alienEnemy, false);
-               alienEnemyPool.free(alienEnemy);
+                alienEnemies.removeValue(alienEnemy, false);
+                alienEnemyPool.free(alienEnemy);
                 if(player.state == Player.STATE.DEAD && player.getStateTimer() < 0)
                     game.setScreen(new GameOverScreen(game, player.getScore()));
+            }
+            if(currentLevel == Level.INDUSTRIAL){
+                alienEnemies.removeValue(alienEnemy, false);
+                alienEnemyPool.free(alienEnemy);
             }
             if(alienEnemy.getPosition().x + alienEnemy.getWIDTH() < 0) {
                 player.addToScore();
